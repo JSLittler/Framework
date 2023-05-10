@@ -1,0 +1,31 @@
+{
+  "name": "framework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "module": "dist/app.bundle.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-check": "tsc --project tsconfig.json",
+    "build": "npm run ts-check && node ./esbuild/build.mjs",
+    "serve": "npm run build && web-dev-server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "@web/dev-server": "^0.1.35",
+    "esbuild": "^0.17.12",
+    "typescript": "^5.0.4",
+    "log-beautify": "^1.2.0"
+  },
+  "dependencies": {
+    "@koa/cors": "^4.0.0",
+    "esbuild-sass-plugin": "^2.8.0",
+    "lit": "^2.7.2"
+  }
+}
