@@ -3,7 +3,6 @@ import { customElement, property } from 'lit/decorators.js';
 
 import changeAttribute from '../utils/changeAttribute';
 
-@customElement('wc-dynamic-interactive-element')
 export default class WcDynamicInteractiveElement extends LitElement {
     @property()
     id!: string;

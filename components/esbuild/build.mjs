@@ -2,6 +2,7 @@ import esbuild from 'esbuild';
 import { sassPlugin } from 'esbuild-sass-plugin';
 import log from 'log-beautify';
 import fs from 'fs';
+import fse from 'fs-extra';
 
 /** @type esbuild.BuildOptions & { write: false;} */
 const configuration = {
@@ -83,9 +84,17 @@ const bundleProject = async ({ name, path }) => {
 
 const components = [
     { name: 'header', path: './src/header/index.ts' },
+    { name: 'main', path: './src/main/index.ts' },
     { name: 'footer', path: './src/footer/index.ts' }
 ];
 
 components.forEach((component) => bundleProject(component).then(() => {
   log.info('ESBuild ended');
 }));
+
+try {
+  fse.copySync('./src/assets/background-images', './dist/assets/background-images', { overwrite: true })
+  console.log('success!')
+} catch (err) {
+  console.error(err)
+}

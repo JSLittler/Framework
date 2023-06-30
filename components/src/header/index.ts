@@ -7,7 +7,7 @@ import WcDynamicInteractiveElement from '../dynamicInterativeElement';
 @customElement('wc-header')
 export default class WcHeader extends WcDynamicInteractiveElement {
   render() {
-    return html` <header>
+    return html`<header>
         <div>${unsafeHTML(this.value)}</div>
         <div>${Math.random() * 10}</div>
       </header>`;

@@ -1,10 +1,17 @@
 const cdn = "http://localhost:4000/";
 
-const config = [
-  { name: "header", props: [{ key: "id", value: "wc-header" }, { key: "value", value: "Hello World" }] },
-  { name: "footer", props: [{ key: "id", value: "wc-footer" }] },
-];
-const props = { name: 'example name' };
+const config = {
+  background: 'olderBackground',
+  components: [
+    { name: "header", props: [{ key: "id", value: "wc-header" }, { key: "value", value: "Hello World" }] },
+    { name: "main", props: [{ key: "id", value: "wc-main" }] },
+    { name: "footer", props: [{ key: "id", value: "wc-footer" }] },
+  ]
+};
+
+const setBackground = () => {
+  document.body.style.backgroundImage = `url('${cdn}assets/background-images/${config.background}.png')`;
+};
 
 const mountScript = (name) => {
   const script = document.createElement("script");
@@ -25,9 +32,10 @@ const mountComponent = (name, props) => {
   return appPage.appendChild(element);
 };
 
-config.forEach((component) => {
-  const { name, props } = component;
+config.components.forEach((component) => {
+  const { name, props = {} } = component;
 
+  setBackground();
   mountScript(name);
   mountComponent(name, props);
 });
