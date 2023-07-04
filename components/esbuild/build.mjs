@@ -85,7 +85,8 @@ const bundleProject = async ({ name, path }) => {
 const components = [
     { name: 'header', path: './src/header/index.ts' },
     { name: 'main', path: './src/main/index.ts' },
-    { name: 'footer', path: './src/footer/index.ts' }
+    { name: 'footer', path: './src/footer/index.ts' },
+    { name: 'login-form', path: './src/loginForm/index.ts' }
 ];
 
 components.forEach((component) => bundleProject(component).then(() => {
@@ -93,8 +94,8 @@ components.forEach((component) => bundleProject(component).then(() => {
 }));
 
 try {
-  fse.copySync('./src/assets/background-images', './dist/assets/background-images', { overwrite: true })
-  console.log('success!')
+  fse.copySync('./src/assets', './dist/assets', { overwrite: true });
+  console.log('success!');
 } catch (err) {
-  console.error(err)
+  console.error(err);
 }

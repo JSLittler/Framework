@@ -7,9 +7,9 @@ import WcDynamicInteractiveElement from '../dynamicInterativeElement';
 @customElement('wc-header')
 export default class WcHeader extends WcDynamicInteractiveElement {
   render() {
-    return html`<header>
-        <div>${unsafeHTML(this.value)}</div>
-        <div>${Math.random() * 10}</div>
+    return html`<header class="header">
+        <h1 class="app-title">Sunday League Manager</h1>
+        <p class="page-title">${unsafeHTML(this.value)}</p>
       </header>`;
   };
 };

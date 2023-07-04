@@ -1,5 +1,5 @@
-import { LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, css, unsafeCSS } from 'lit';
+import { property } from 'lit/decorators.js';
 
 import changeAttribute from '../utils/changeAttribute';
 
@@ -9,6 +9,14 @@ export default class WcDynamicInteractiveElement extends LitElement {
 
     @property()
     value?: any;
+
+    createRenderRoot() {
+        return this;
+    }
+
+    static get styles() {
+        return css`${unsafeCSS(document.getElementById('global-styles'))}`;
+    }
 
     addListener() {
         const id: string = this.id;

@@ -2,11 +2,25 @@ const cdn = "http://localhost:4000/";
 
 const config = {
   background: 'olderBackground',
+  stylesheet: 'slm',
   components: [
-    { name: "header", props: [{ key: "id", value: "wc-header" }, { key: "value", value: "Hello World" }] },
-    { name: "main", props: [{ key: "id", value: "wc-main" }] },
-    { name: "footer", props: [{ key: "id", value: "wc-footer" }] },
-  ]
+    { name: "header", props: [{ key: "id", value: "wc-header" }, { key: "value", value: "Log in" }] },
+    {
+      name: "main",
+      props: [
+        { key: "id", value: "wc-main" },
+        { key: "value", value: 
+          [
+            {
+              name: "login-form",
+              props: [{ key: "id", value: "login-Form" }, { key: "value", value: "Log in" }]
+            },
+          ]
+        }
+      ]
+    },
+    { name: "footer", props: [{ key: "id", value: "wc-footer" }, { key: "value", value: "Log in" }] },
+  ],
 };
 
 const setBackground = () => {
@@ -21,6 +35,18 @@ const mountScript = (name) => {
   return document.head.appendChild(script);
 };
 
+const setStyles = () => {
+  const head = document.head;
+  const link = document.createElement("link");
+
+  link.type = 'text/css';
+  link.id = 'global-styles';
+  link.rel = 'stylesheet';
+  link.href = `${cdn}assets/stylesheets/${config.stylesheet}-styles.css`;
+
+  head.appendChild(link);
+}
+
 const mountComponent = (name, props) => {
   const appPage = document.getElementById('app-page');
   const element = document.createElement(`wc-${name}`);
@@ -32,9 +58,10 @@ const mountComponent = (name, props) => {
   return appPage.appendChild(element);
 };
 
-config.components.forEach((component) => {
+config.components.forEach( async component => {
   const { name, props = {} } = component;
 
+  setStyles();
   setBackground();
   mountScript(name);
   mountComponent(name, props);
