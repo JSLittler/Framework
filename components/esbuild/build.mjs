@@ -86,7 +86,8 @@ const components = [
     { name: 'header', path: './src/header/index.ts' },
     { name: 'main', path: './src/main/index.ts' },
     { name: 'footer', path: './src/footer/index.ts' },
-    { name: 'login-form', path: './src/loginForm/index.ts' }
+    { name: 'login-form', path: './src/loginForm/index.ts' },
+    { name: 'select-game', path: './src/selectGame/index.ts' }
 ];
 
 components.forEach((component) => bundleProject(component).then(() => {

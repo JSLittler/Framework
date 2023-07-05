@@ -1,3 +1,11 @@
+/* app infrastructure */
+
+.app-page {
+  display: inline;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .header {
   width: 100%;
   margin: 0 auto;
@@ -35,12 +43,14 @@
   color: white;
   background-color: red;
   overflow-y: scroll;
+  box-shadow: 5px 5px 5px #694545fc, -2px 5px 5px #694545fc;
 }
 
 .footer {
   width: 100%;
   margin: 0 auto;
-  position: fixed;
+  position: absolute;
+  bottom: 0;
   align-items: center;
   min-height: 2em;
   display: flex;
@@ -62,6 +72,8 @@
     height: 10px;
   }
 }
+
+/* page content  */
 
 .message {
   color: red;

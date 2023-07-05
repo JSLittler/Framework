@@ -1,26 +1,47 @@
 const cdn = "http://localhost:4000/";
 
+const loginPage = [
+  { name: "header", props: [{ key: "id", value: "wc-header" }, { key: "value", value: "Log in" }] },
+  {
+    name: "main",
+    props: [
+      { key: "id", value: "wc-main" },
+      { key: "value", value: 
+        [
+          {
+            name: "login-form",
+            props: [{ key: "id", value: "login-Form" }, { key: "value", value: "Log in" }]
+          }
+        ]
+      }
+    ]
+  },
+  { name: "footer", props: [{ key: "id", value: "wc-footer" }, { key: "value", value: "Log in" }] },
+];
+
+const selectGamePage = [
+  { name: "header", props: [{ key: "id", value: "wc-header" }, { key: "value", value: "Select game" }] },
+  {
+    name: "main",
+    props: [
+      { key: "id", value: "wc-main" },
+      { key: "value", value: 
+        [
+          {
+            name: "select-game",
+            props: [{ key: "id", value: "select-game" }, { key: "value", value: "--- add saved game here ---" }]
+          }
+        ]
+      }
+    ]
+  },
+  { name: "footer", props: [{ key: "id", value: "wc-footer" }, { key: "value", value: "Select game" }] },
+];
+
 const config = {
   background: 'olderBackground',
   stylesheet: 'slm',
-  components: [
-    { name: "header", props: [{ key: "id", value: "wc-header" }, { key: "value", value: "Log in" }] },
-    {
-      name: "main",
-      props: [
-        { key: "id", value: "wc-main" },
-        { key: "value", value: 
-          [
-            {
-              name: "login-form",
-              props: [{ key: "id", value: "login-Form" }, { key: "value", value: "Log in" }]
-            },
-          ]
-        }
-      ]
-    },
-    { name: "footer", props: [{ key: "id", value: "wc-footer" }, { key: "value", value: "Log in" }] },
-  ],
+  components: selectGamePage
 };
 
 const setBackground = () => {
