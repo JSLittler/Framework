@@ -1,51 +1,63 @@
+const gameEngineAPI = "http://localhost:4002/";
 const cdn = "http://localhost:4000/";
 
-const loginPage = [
-  { name: "header", props: [{ key: "id", value: "wc-header" }, { key: "value", value: "Log in" }] },
-  {
-    name: "main",
-    props: [
-      { key: "id", value: "wc-main" },
-      { key: "value", value: 
-        [
-          {
-            name: "login-form",
-            props: [{ key: "id", value: "login-Form" }, { key: "value", value: "Log in" }]
-          }
-        ]
-      }
-    ]
-  },
-  { name: "footer", props: [{ key: "id", value: "wc-footer" }, { key: "value", value: "Log in" }] },
-];
-
-const selectGamePage = [
-  { name: "header", props: [{ key: "id", value: "wc-header" }, { key: "value", value: "Select game" }] },
-  {
-    name: "main",
-    props: [
-      { key: "id", value: "wc-main" },
-      { key: "value", value: 
-        [
-          {
-            name: "select-game",
-            props: [{ key: "id", value: "select-game" }, { key: "value", value: "--- add saved game here ---" }]
-          }
-        ]
-      }
-    ]
-  },
-  { name: "footer", props: [{ key: "id", value: "wc-footer" }, { key: "value", value: "Select game" }] },
-];
-
-const config = {
-  background: 'olderBackground',
-  stylesheet: 'slm',
-  components: selectGamePage
+const setLocalStorage = state => {
+  localStorage.setItem('framework', JSON.stringify(state));
 };
 
-const setBackground = () => {
-  document.body.style.backgroundImage = `url('${cdn}assets/background-images/${config.background}.png')`;
+const getLocalStorage = () => {
+  const state = localStorage.getItem('framework');
+
+  return state ? JSON.parse(state) : '';
+};
+
+const setCredentials = (username, password) => {
+  const state = getLocalStorage();
+
+  const updatedState = {
+    ...state,
+    credentials: {
+      username,
+      password
+    }
+  };
+  
+  setLocalStorage(updatedState);
+};
+
+const getCredentials = () => {
+
+  return getLocalStorage()?.userDetails || '';
+};
+
+const getPageState = async (endpoint, headers) => {
+  const { username, id } = getCredentials();
+
+  if (username && id) {
+    headers.username = username;
+    headers.id = id;
+  }
+
+  const param = endpoint ? `${endpoint}` : '';
+
+  const { state, config } = await fetch(`${gameEngineAPI}${param}`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+    },
+  }).then(function(response) {
+
+    return response.json();
+  });
+
+  return {
+    state,
+    config
+  };
+};
+
+const setBackground = (background) => {
+  document.body.style.backgroundImage = `url('${cdn}assets/background-images/${background}.png')`;
 };
 
 const mountScript = (name) => {
@@ -56,14 +68,14 @@ const mountScript = (name) => {
   return document.head.appendChild(script);
 };
 
-const setStyles = () => {
+const setStyles = (stylesheet) => {
   const head = document.head;
   const link = document.createElement("link");
 
   link.type = 'text/css';
   link.id = 'global-styles';
   link.rel = 'stylesheet';
-  link.href = `${cdn}assets/stylesheets/${config.stylesheet}-styles.css`;
+  link.href = `${cdn}assets/stylesheets/${stylesheet}-styles.css`;
 
   head.appendChild(link);
 }
@@ -79,11 +91,47 @@ const mountComponent = (name, props) => {
   return appPage.appendChild(element);
 };
 
-config.components.forEach( async component => {
-  const { name, props = {} } = component;
+const sendUpdate = async update => {
+  const { componentIds, attribute, stateAddress } = update;
+  const state = await getLocalStorage();
+  
+  const value = stateAddress.split('.').reduce((o,i)=> o[i], state);
 
-  setStyles();
-  setBackground();
-  mountScript(name);
-  mountComponent(name, props);
+  componentIds.forEach(async id => {
+    const element = document.getElementById(id);
+
+    element.setAttribute(attribute, value);
+  });
+};
+
+const setUpPage = async (detail) => {
+  const body = document.createElement('body');
+  body.id = 'app-page';
+  body.classList.add('app-page');
+  document.body = body;
+
+  const { state, config } = await getPageState(detail?.endpoint, detail?.headers);
+  setLocalStorage(state);
+
+  const { stylesheet, background, components, updates } = config;
+
+  setStyles(stylesheet);
+  setBackground(background);
+
+  components.forEach(async component => {
+    const { name, props = {} } = component;
+
+    mountScript(name);
+    mountComponent(name, props);
+  });
+
+  await updates.forEach(async u => await sendUpdate(u));
+};
+
+setUpPage();
+
+document.addEventListener('updatePage', (e) => {
+  const { detail } = e;
+  
+  return setUpPage(detail);
 });

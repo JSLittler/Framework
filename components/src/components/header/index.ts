@@ -9,7 +9,7 @@ export default class WcHeader extends WcDynamicInteractiveElement {
   render() {
     return html`<header class="header">
         <h1 class="app-title">Sunday League Manager</h1>
-        <p class="page-title">${unsafeHTML(this.value)}</p>
+        <p class="page-title">${unsafeHTML(this.componentTitle)}</p>
       </header>`;
   };
 };

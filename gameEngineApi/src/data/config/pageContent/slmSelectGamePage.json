@@ -1,0 +1,23 @@
+[
+    { "name": "header", "props": [{ "key": "id", "value": "wc-header" }, { "key": "componentTitle", "value": "Select game" }] },
+    {
+      "name": "main",
+      "props": [
+        { "key": "id", "value": "wc-main" },
+        { "key": "value", "value": 
+          [
+            {
+              "name": "select-game",
+              "props": [
+                { "key": "id", "value": "select-game" },
+                { "key": "username", "value": "" },
+                { "key": "savedGame", "value": "" },
+                { "key": "endpoint", "value": "slm/game/new" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    { "name": "footer", "props": [{ "key": "id", "value": "wc-footer" }, { "key": "componentTitle", "value": "Select game" }] }
+]

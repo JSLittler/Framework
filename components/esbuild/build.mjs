@@ -83,11 +83,11 @@ const bundleProject = async ({ name, path }) => {
 };
 
 const components = [
-    { name: 'header', path: './src/header/index.ts' },
-    { name: 'main', path: './src/main/index.ts' },
-    { name: 'footer', path: './src/footer/index.ts' },
-    { name: 'login-form', path: './src/loginForm/index.ts' },
-    { name: 'select-game', path: './src/selectGame/index.ts' }
+    { name: 'header', path: './src/components/header/index.ts' },
+    { name: 'main', path: './src/components/main/index.ts' },
+    { name: 'footer', path: './src/components/footer/index.ts' },
+    { name: 'login-form', path: './src/components/loginForm/index.ts' },
+    { name: 'select-game', path: './src/components/selectGame/index.ts' }
 ];
 
 components.forEach((component) => bundleProject(component).then(() => {

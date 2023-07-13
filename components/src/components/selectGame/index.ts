@@ -1,18 +1,28 @@
 import { html } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
 import WcDynamicInteractiveElement from '../dynamicInterativeElement';
 
 @customElement('wc-select-game')
 export default class WcSelectGame extends WcDynamicInteractiveElement {
+  @property({ attribute: false })
+  username: string = '';
+  
+  @property({ attribute: false })
+  savedGame?: any;
+
+  async newGameRequest(e: any) {
+    e.target.dispatchEvent(new CustomEvent('updatePage', {
+      bubbles: true,
+      detail: {
+        endpoint: this.endpoint
+      }
+    }));
+  };
+
   render() {
-
-    const username = 'Agamemnon';
-
-    const game = {
-        playersTeam: false,
-    };
-
+    const username = this.getAttribute('username');
+    
     const savedGameElement = html`
         <div id="saved-game" className="savedGame">
             <h2>you have a game saved</h2>
@@ -31,12 +41,13 @@ export default class WcSelectGame extends WcDynamicInteractiveElement {
         </div>
     `
 
-    const savedGame = game?.playersTeam ? savedGameElement : noSavedGameElement;
+    const displayGame = () => this.savedGame?.playersTeam ? savedGameElement : noSavedGameElement;
 
     return html`
         <div>
             <h2>Hi ${username},</h2>
-            ${savedGame}
+            ${displayGame()}
+            <button id="new-game-button" type="button" @click=${this.newGameRequest} className="button">Start a new game</button>
       </div>
     `;
   };

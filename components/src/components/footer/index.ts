@@ -12,7 +12,7 @@ export default class WcFooter  extends WcDynamicInteractiveElement {
   render() {
     return html` <footer class="footer">
         <h1 class="app-title">Sunday League Manager</h1>
-        <p class="page-title">${unsafeHTML(this.value)}</p>
+        <p class="page-title">${unsafeHTML(this.componentTitle)}</p>
     </footer>`;
   }
 };

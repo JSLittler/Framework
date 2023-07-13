@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  game-engine-api:
+    container_name: game-engine-api
+    restart: always
+    build: ./
+    ports:
+      - "4002:4002"
+    networks:
+      - "game-engine"
+  mongo:
+    container_name: game-engine-mongo
+    image: mongo
+    restart: always
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongo-volume:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: game-engine
+      MONGO_INITDB_ROOT_PASSWORD: game-engine
+      MONGO_INITBD_DATABASE: game-engine
+    ports:
+      - "27017:27017"
+    networks:
+      - "game-engine"
+volumes:
+  mongo-volume:
+networks:
+  game-engine:
