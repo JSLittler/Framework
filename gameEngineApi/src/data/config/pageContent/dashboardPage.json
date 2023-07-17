@@ -1,0 +1,29 @@
+[
+    { "name": "header", "props": [{ "key": "id", "value": "wc-header" }, { "key": "componentTitle", "value": "Dashboard" }] },
+    {
+      "name": "main",
+      "props": [
+        { "key": "id", "value": "wc-main" },
+        { "key": "value", "value": 
+          [
+            {
+              "name": "dashboard",
+              "props": [
+                { "key": "id", "value": "dashboard" },
+                {
+                  "key": "pageLinks",
+                  "value": {
+                    "transfers": "transfersUrl",
+                    "pickTeam": "pickTeamUrl",
+                    "playGame": "playGameUrl",
+                    "viewTeam": "slm/game/team/"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    { "name": "footer", "props": [{ "key": "id", "value": "wc-footer" }, { "key": "componentTitle", "value": "Dashboard" }] }
+]

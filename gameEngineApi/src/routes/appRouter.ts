@@ -1,11 +1,11 @@
 import { Application } from "express";
-import { getSlmLoginPage } from "../pageConfig/pageConfig";
+import { getSlmLoginPage } from "../pageConfig";
 import gamesRoutes from "./games";
 
 import loginRoutes from "./login";
 
 const appRouter = (app: Application) => {
-    app.get('/', async (req, res) => {
+    app.get('/slm', async (req, res) => {
       const response = {
         state: {},
         config: await getSlmLoginPage()

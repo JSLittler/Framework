@@ -8,7 +8,7 @@ export const findUser = async (username: string) => {
     const user: any = await usersCollection.findOne(query);
 
     return {
-      _id: user?.id,
+      _id: user?._id,
       name: user?.name,
       storedPassword: user?.password
     };

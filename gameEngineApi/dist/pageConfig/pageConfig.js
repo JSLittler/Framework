@@ -1,31 +1,35 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSlmSelectGamePage = exports.getSlmLoginPage = void 0;
-const loginPageConfig = require('../data/config/pageOutline/slmPageOutline.json');
+exports.getSlmDashboardPage = exports.getSlmSelectGamePage = exports.getSlmLoginPage = void 0;
+const pageConfig = require('../data/config/pageOutline/slmPageOutline.json');
 const loginPageComponents = require('../data/config/pageContent/slmLoginPage.json');
 const selectGameComponents = require('../data/config/pageContent/slmSelectGamePage.json');
-const getSlmLoginPage = () => __awaiter(void 0, void 0, void 0, function* () {
-    loginPageConfig.components = loginPageComponents;
-    return loginPageConfig;
-});
-exports.getSlmLoginPage = getSlmLoginPage;
-const getSlmSelectGamePage = () => __awaiter(void 0, void 0, void 0, function* () {
-    loginPageConfig.components = selectGameComponents;
+const dashboardComponents = require('../data/config/pageContent/dashboardPage.json');
+const getUsernameUpdate = (ids) => {
     const usernameUpdate = {
-        componentIds: ['select-game'],
+        componentIds: [],
         attribute: 'username',
         stateAddress: 'userDetails.username'
     };
-    loginPageConfig.updates.push(usernameUpdate);
-    return loginPageConfig;
-});
+    ids.forEach(id => usernameUpdate.componentIds.push(id));
+    return usernameUpdate;
+};
+const getSlmLoginPage = async () => {
+    pageConfig.components = loginPageComponents;
+    return pageConfig;
+};
+exports.getSlmLoginPage = getSlmLoginPage;
+const getSlmSelectGamePage = async () => {
+    pageConfig.components = selectGameComponents;
+    const update = getUsernameUpdate(['select-game']);
+    pageConfig.updates.push(update);
+    return pageConfig;
+};
 exports.getSlmSelectGamePage = getSlmSelectGamePage;
+const getSlmDashboardPage = async () => {
+    pageConfig.components = dashboardComponents;
+    const update = getUsernameUpdate(['dashboard']);
+    pageConfig.updates.push(update);
+    return pageConfig;
+};
+exports.getSlmDashboardPage = getSlmDashboardPage;

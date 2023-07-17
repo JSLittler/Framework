@@ -1,10 +1,10 @@
 import { connectToSavedGames, closeConnection } from "./connections"; 
 
-export const findGameByUser = async (username: string, id: string) => {
+export const findGameByUser = async (username: string, userId: string) => {
   try {
     const savedGamesCollection = await connectToSavedGames();
     
-    const query = { owner: { username, userId: `${id}` }};
+    const query = { owner: { username, userId, }};
     const savedGame = await savedGamesCollection.findOne(query);
 
     return savedGame;
@@ -50,7 +50,7 @@ export const addSavedGame = async (savedGame: any) => {
 
     const result: any = await savedGamesCollection.insertOne(savedGame);
 
-    if (result.insertedCount === 1) {
+    if (result.insertedId === savedGame._id) {
       return console.dir('Successfully saved game.');
     }
 

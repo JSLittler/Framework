@@ -25,12 +25,9 @@ const setCredentials = (username, password) => {
   setLocalStorage(updatedState);
 };
 
-const getCredentials = () => {
+const getCredentials = () => getLocalStorage()?.userDetails || '';
 
-  return getLocalStorage()?.userDetails || '';
-};
-
-const getPageState = async (endpoint, headers) => {
+const getPageState = async (endpoint = 'slm', headers = {}) => {
   const { username, id } = getCredentials();
 
   if (username && id) {
@@ -38,9 +35,7 @@ const getPageState = async (endpoint, headers) => {
     headers.id = id;
   }
 
-  const param = endpoint ? `${endpoint}` : '';
-
-  const { state, config } = await fetch(`${gameEngineAPI}${param}`, {
+  const { state, config } = await fetch(`${gameEngineAPI}${endpoint}`, {
     method: 'GET',
     headers: {
       ...headers,
@@ -92,15 +87,17 @@ const mountComponent = (name, props) => {
 };
 
 const sendUpdate = async update => {
-  const { componentIds, attribute, stateAddress } = update;
+  const { componentIds, attribute, stateAddress, isData } = update;
   const state = await getLocalStorage();
   
-  const value = stateAddress.split('.').reduce((o,i)=> o[i], state);
+  const value = state?.userDetails ? stateAddress.split('.').reduce((o,i)=> o[i], state) : null;
 
   componentIds.forEach(async id => {
     const element = document.getElementById(id);
 
-    element.setAttribute(attribute, value);
+    if (!element || !value) return;
+
+    element[attribute] = value;
   });
 };
 
@@ -128,6 +125,7 @@ const setUpPage = async (detail) => {
   await updates.forEach(async u => await sendUpdate(u));
 };
 
+setLocalStorage({});
 setUpPage();
 
 document.addEventListener('updatePage', (e) => {

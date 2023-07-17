@@ -1,29 +1,80 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-// import { findGameByUser, findSavedGame, deleteSavedGame, managePlayerGames } from '../database/gameFunctions.js';
-// import { setupNewGame } from '../models/newGame.js';
+const userFunctions_js_1 = require("../database/userFunctions.js");
+const index_js_1 = require("../models/newGame/index.js");
+const index_js_2 = require("../pageConfig/index.js");
+const gameFunctions_js_1 = require("../database/gameFunctions.js");
+// import { findSavedGame, deleteSavedGame, managePlayerGames } from '../database/gameFunctions.js';
 // import { simulateGames } from '../models/simulateGames.js';
 const gamesRoutes = (app) => {
-    app.get('/slm/game/new', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        // const { username, password } = req.headers;
-        // const { _id } = await findUser(username);
-        // console.log('id : ', _id);
-        // if(_id.toString() !== password) {
-        //   return res.status(403).json({});
+    app.get('/slm/game/new', async (req, res) => {
+        const { username, id } = req === null || req === void 0 ? void 0 : req.headers;
+        const { name, _id } = await (0, userFunctions_js_1.findUser)((username === null || username === void 0 ? void 0 : username.toString()) || '');
+        if (!id || !username || _id.toString() !== (id === null || id === void 0 ? void 0 : id.toString())) {
+            return res.status(401).json({});
+        }
+        const config = await (0, index_js_2.getSlmDashboardPage)();
+        const newGame = await (0, index_js_1.setupNewGame)(name, _id);
+        const userDetails = {
+            id: _id,
+            username: name,
+            loggedIn: true
+        };
+        const response = {
+            state: {
+                userDetails,
+                game: newGame
+            },
+            config
+        };
+        return res.send(response);
+    });
+    app.get('/slm/game/saved', async (req, res) => {
+        const { username, id } = req === null || req === void 0 ? void 0 : req.headers;
+        const { name, _id } = await (0, userFunctions_js_1.findUser)((username === null || username === void 0 ? void 0 : username.toString()) || '');
+        if (!id || !username || _id.toString() !== (id === null || id === void 0 ? void 0 : id.toString())) {
+            return res.status(401).json({});
+        }
+        const config = await (0, index_js_2.getSlmDashboardPage)();
+        const savedGame = await (0, gameFunctions_js_1.findGameByUser)(name, _id);
+        const userDetails = {
+            id: _id,
+            username: name,
+            loggedIn: true
+        };
+        const response = {
+            state: {
+                userDetails,
+                game: savedGame
+            },
+            config
+        };
+        return res.send(response);
+    });
+    app.get('/slm/game/team/:team', async (req, res) => {
+        const { username, id } = req === null || req === void 0 ? void 0 : req.headers;
+        const { team } = req.params;
+        return res.json(team);
+        // const { name, _id } = await findUser(username?.toString() || '');
+        // if(!id || !username || _id.toString() !== id?.toString()) {
+        //   return res.status(401).json({});
         // }
-        // const newGame = await setupNewGame(username, password);
-        // return res.send(newGame);
-        return res.send('new game');
-    }));
+        // const config = await getSlmDashboardPage();
+        // const savedGame = await findGameByUser(name, _id);
+        // const userDetails = {
+        //   id: _id,
+        //   username: name,
+        //   loggedIn: true
+        // };
+        // const response = {
+        //   state: { 
+        //     userDetails,
+        //     game: savedGame
+        //   },
+        //   config
+        // };
+        // return res.send(response);
+    });
     //   app.get('/game/allUser', async (req, res) => {
     //     const { username, userId } = req.body;
     //     const games = await findGameByUser(username) || [];

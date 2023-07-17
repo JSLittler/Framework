@@ -10,9 +10,8 @@
               "name": "select-game",
               "props": [
                 { "key": "id", "value": "select-game" },
-                { "key": "username", "value": "" },
-                { "key": "savedGame", "value": "" },
-                { "key": "endpoint", "value": "slm/game/new" }
+                { "key": "endpoint", "value": "slm/game/new" },
+                { "key": "savedGameEndpoint", "value": "slm/game/saved" }
               ]
             }
           ]
