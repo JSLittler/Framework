@@ -1,0 +1,26 @@
+[
+    { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "Transfers" }] },
+    {
+      "name": "main",
+      "props": [
+        { "key": "id", "value": "main" },
+        { "key": "value", "value": 
+          [
+            {
+              "name": "transfers",
+              "props": [
+                { "key": "id", "value": "transfers" },
+                {
+                  "key": "pageLinks",
+                  "value": {
+                    "dashboard": "slm/game/saved"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    { "name": "footer", "props": [{ "key": "id", "value": "footer" }, { "key": "componentTitle", "value": "Transfers" }] }
+]

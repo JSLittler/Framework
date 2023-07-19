@@ -87,15 +87,22 @@ const mountComponent = (name, props) => {
 };
 
 const sendUpdate = async update => {
-  const { componentIds, attribute, stateAddress, isData } = update;
+  const { componentIds, attribute, stateAddress, setValue } = update;
   const state = await getLocalStorage();
-  
-  const value = state?.userDetails ? stateAddress.split('.').reduce((o,i)=> o[i], state) : null;
+  let value;
+
+  if (setValue) {
+    value =  setValue
+  } else {
+    value = state?.userDetails ? stateAddress.split('.').reduce((o,i)=> o[i], state) : null;
+  }
 
   componentIds.forEach(async id => {
     const element = document.getElementById(id);
 
     if (!element || !value) return;
+
+    if (element[attribute] = value) return;
 
     element[attribute] = value;
   });
@@ -115,14 +122,16 @@ const setUpPage = async (detail) => {
   setStyles(stylesheet);
   setBackground(background);
 
-  components.forEach(async component => {
+  await components.forEach(async component => {
     const { name, props = {} } = component;
 
     mountScript(name);
     mountComponent(name, props);
   });
 
-  await updates.forEach(async u => await sendUpdate(u));
+  await updates.forEach(async u => {
+    await sendUpdate(u)
+  });
 };
 
 setLocalStorage({});

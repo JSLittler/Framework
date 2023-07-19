@@ -1,9 +1,9 @@
 [
-    { "name": "header", "props": [{ "key": "id", "value": "wc-header" }, { "key": "componentTitle", "value": "Log in" }] },
+    { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "Log in" }] },
     {
       "name": "main",
       "props": [
-        { "key": "id", "value": "wc-main" },
+        { "key": "id", "value": "main" },
         { "key": "value", "value": 
           [
             {
@@ -14,5 +14,5 @@
         }
       ]
     },
-    { "name": "footer", "props": [{ "key": "id", "value": "wc-footer" }, { "key": "componentTitle", "value": "Log in" }] }
+    { "name": "footer", "props": [{ "key": "id", "value": "footer" }, { "key": "componentTitle", "value": "Log in" }] }
 ]

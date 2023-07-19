@@ -24,13 +24,12 @@ export default class WcDashboard extends WcDynamicInteractiveElement {
     pageLinks?: any;
 
     goToPage(e: any) {
-        console.log('go to page: ', e.target.value);
-        // e.target.dispatchEvent(new CustomEvent('updatePage', {
-        //     bubbles: true,
-        //     detail: {
-        //         endpoint: this.endpoint
-        //     }
-        // }));
+        e.target.dispatchEvent(new CustomEvent('updatePage', {
+            bubbles: true,
+            detail: {
+                endpoint: e.target.value
+            }
+        }));
     };
 
     goToTeam(e: any) {
@@ -85,7 +84,7 @@ export default class WcDashboard extends WcDynamicInteractiveElement {
         if (!this.leagueTable) return html``;
 
         return html`
-            <div class="league-table">
+            <div>
                 <table id='leagueTable' class="table">
                     <thead>
                         <tr>
@@ -113,7 +112,7 @@ export default class WcDashboard extends WcDynamicInteractiveElement {
     };
 
     getNextGame = () => {
-        if (!this.fixtures.length) {
+        if (!this.fixtures?.length) {
             return html`
               <div></div>
             `;

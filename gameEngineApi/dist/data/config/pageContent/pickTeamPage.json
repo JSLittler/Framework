@@ -1,0 +1,18 @@
+[
+    { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "Pick Team" }] },
+    {
+      "name": "main",
+      "props": [
+        { "key": "id", "value": "main" },
+        { "key": "value", "value": 
+          [
+            {
+              "name": "pick-team",
+              "props": [{ "key": "id", "value": "pick-team" }]
+            }
+          ]
+        }
+      ]
+    },
+    { "name": "footer", "props": [{ "key": "id", "value": "footer" }, { "key": "componentTitle", "value": "Pick Team" }] }
+]
