@@ -32,17 +32,6 @@ export default class WcTransfers extends WcDynamicInteractiveElement {
         }));
     };
 
-    // viewPlayer = (e: any) => {
-    //     const viewPlayerUrl = this.pageLinks.viewPlayer.replace(':team', this.team);
-
-    //     e.target.dispatchEvent(new CustomEvent('updatePage', {
-    //         bubbles: true,
-    //         detail: {
-    //             endpoint: `${viewPlayerUrl}${e.target.value}`
-    //         }
-    //     }));
-    // }
-
     setIncomingTransfer = (e: any) => {
         this.incomingTransfer = this.incomingTransfer === e.target.value ? '' : e.target.value;
     };
@@ -80,7 +69,7 @@ export default class WcTransfers extends WcDynamicInteractiveElement {
         <table class="table">
           <thead>
             <tr>
-              <th><h2>${position}</h2></th>
+              <th><p>${position}</p></th>
             </tr>
             <tr>
               <th>Name</th>
@@ -94,7 +83,7 @@ export default class WcTransfers extends WcDynamicInteractiveElement {
               return html`
                 <tr>
                   <td>
-                    <button type="button" value=${p.name} @click=${setTransfer} class=${this.incomingTransfer === p.name ? "button-small-selected" : "button-small"}>
+                    <button type="button" value=${p.name} @click=${setTransfer} class=${this.incomingTransfer === p.name || this.outgoingTransfer === p.name ? "button-small-selected" : "button-small"}>
                       ${p.name}
                     </button>
                   </td>
@@ -110,13 +99,25 @@ export default class WcTransfers extends WcDynamicInteractiveElement {
     };
 
     getPlayersToTransfer = (position: any, subPosition: any, playerGroup: any) => {
-        if(!this.incomingTransfer?.positions?.length) {
+        if(!this.incomingTransfer) {
           return false;
         }
-    
-        const positionInView = subPosition.map((p: any) => this.incomingTransfer?.positions.includes(p));
+
+        const transferPlayer = this.transferList?.squad[`${position}`].find((p: any) => p.name === this.incomingTransfer);
+        const positionInView = subPosition.map((p: any) => transferPlayer?.positions.includes(p));
         
         return positionInView.includes(true) ? this.getPlayerTable(position, playerGroup, this.setOutgoingTransfer) : ``;
+    };
+
+    confirmTransfer = (e: any) => {
+        if (!this.incomingTransfer || !this.outgoingTransfer) return;
+
+        e.target.dispatchEvent(new CustomEvent('updatePage', {
+            bubbles: true,
+            detail: {
+                endpoint: `slm/game/transfers/outgoing/${this.outgoingTransfer}/incoming/${this.incomingTransfer}`
+            }
+        }));
     };
 
     render() {
@@ -124,17 +125,28 @@ export default class WcTransfers extends WcDynamicInteractiveElement {
         const { goalKeepers, defenders, midfielders, forwards } = this.playersTeam.squad;
 
         return html`
-        <div class="transfers">
+        <div class="div-padding-bottom">
             <h2>${this.username}, select a player to compare or swap into your squad</h2>
             ${this.getPlayerTable('goalKeepers', this.transferList.squad.goalKeepers, this.setIncomingTransfer)}
             ${this.getPlayerTable('defenders', this.transferList.squad.defenders, this.setIncomingTransfer)}
             ${this.getPlayerTable('midfielders', this.transferList.squad.midfielders, this.setIncomingTransfer)}
             ${this.getPlayerTable('forwards', this.transferList.squad.forwards, this.setIncomingTransfer)}
-            <h2>${this.username}, select a player from your squad to swap out</h2>
-            ${this.getPlayersToTransfer('goalKeepers', ["GK"], goalKeepers)}
-            ${this.getPlayersToTransfer('defenders', ["RD", "CD", "LD"], defenders)}
-            ${this.getPlayersToTransfer('midfielders', ["RM", "CM", "LM"], midfielders)}
-            ${this.getPlayersToTransfer('forwards', ["LF", "CF", "RF", "S"], forwards)}
+            <div class="div-padding-top" style=${this.incomingTransfer ? 'display: block;' : 'display: none;'}>
+            <h2>now select a player from your squad to swap out</h2>
+                ${this.getPlayersToTransfer('goalKeepers', ["GK"], goalKeepers)}
+                ${this.getPlayersToTransfer('defenders', ["RD", "CD", "LD"], defenders)}
+                ${this.getPlayersToTransfer('midfielders', ["RM", "CM", "LM"], midfielders)}
+                ${this.getPlayersToTransfer('forwards', ["LF", "CF", "RF", "S"], forwards)}
+            </div>
+            <button
+                id="confirm-transfer-button"
+                type="button"
+                class="button"
+                style=${this.incomingTransfer && this.outgoingTransfer ? '' : 'display: none;'}
+                @click=${this.confirmTransfer}
+            >
+                Confirm Transfer
+            </button>
             <button id="dashboard-button" type="button" value=${this.pageLinks.dashboard} @click=${this.goToPage}>Return to Dashboard</button>
         </div>
         `;

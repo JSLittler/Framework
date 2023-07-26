@@ -13,8 +13,8 @@
                 {
                   "key": "pageLinks",
                   "value": {
-                    "transfers": "slm/game/transfers",
-                    "pickTeam": "slm/game/pickTeam",
+                    "transfers": "slm/game/transfers/new",
+                    "pickTeam": "slm/game/pick-team",
                     "playGame": "slm/game/playGame",
                     "viewTeam": "slm/game/team/"
                   }

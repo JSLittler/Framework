@@ -91,7 +91,8 @@ const getSlmPickTeamPage = async () => {
     const updates = [
         getUpdate(['pick-team'], 'username', 'userDetails.username'),
         getUpdate(['pick-team'], 'playersTeam', 'game.playersTeam'),
-        getUpdate(['pick-team'], 'formations', 'game.formations')
+        getUpdate(['pick-team'], 'formations', 'game.formations'),
+        getUpdate(['pick-team'], 'fixtures', 'game.fixtures')
     ];
     pageConfig.updates = updates;
     return pageConfig;

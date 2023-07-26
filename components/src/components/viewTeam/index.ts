@@ -2,6 +2,7 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import WcDynamicInteractiveElement from '../dynamicInterativeElement';
+import getPlayerTable from '../getPlayerTable';
 
 @customElement('wc-view-team')
 export default class WcViewTeam extends WcDynamicInteractiveElement {
@@ -28,75 +29,17 @@ export default class WcViewTeam extends WcDynamicInteractiveElement {
             }
         }));
     };
+    
+  viewPlayer = (e: any) => {
+    const viewPlayerUrl = this.pageLinks.viewPlayer.replace(':team', this.team);
 
-    viewPlayer = (e: any) => {
-        const viewPlayerUrl = this.pageLinks.viewPlayer.replace(':team', this.team);
-
-        e.target.dispatchEvent(new CustomEvent('updatePage', {
-            bubbles: true,
-            detail: {
-                endpoint: `${viewPlayerUrl}${e.target.value}`
-            }
-        }));
-    }
-
-    getAttributeColumnTitles = (position: string) => {
-        if ( position === 'goalKeepers') {
-            return html`<th>Overall</th>`;
+    e.target.dispatchEvent(new CustomEvent('updatePage', {
+        bubbles: true,
+        detail: {
+            endpoint: `${viewPlayerUrl}${e.target.value}`
         }
-
-        return html`
-            <th>Defence</th>
-            <th>Midfield</th>
-            <th>Attack</th>
-        `
-    };
-
-    getAttributeColumnValues = (position: string, player: any) => {
-        if ( position === 'goalKeepers') {
-            return html`<td>${player.attributesAverages[0].attributeFinalValue}</td>`;
-        }
-
-        return html`
-            <td>${player.attributesAverages.find((a: any) => a.attributeName === 'defenceAverage').attributeFinalValue}</td>
-            <td>${player.attributesAverages.find((a: any) => a.attributeName === 'midfieldAverage').attributeFinalValue}</td>
-            <td>${player.attributesAverages.find((a: any) => a.attributeName === 'attackAverage').attributeFinalValue}</td>
-        `
-    };
-
-    getPlayerTable = (position: string, players: any) => {
-        return html`<div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th><h2>${position}</h2></th>
-            </tr>
-            <tr>
-              <th>Name</th>
-              <th>Club</th>
-              <th>Positions</th>
-              ${this.getAttributeColumnTitles(position)}
-            </tr>
-          </thead>
-          <tbody>
-            ${players.map((p: any) => {
-              return html`
-                <tr>
-                  <td>
-                    <button type="button" value=${p.name} @click=${this.viewPlayer} class="button-small">
-                      ${p.name}
-                    </button>
-                  </td>
-                  <td>${p.club}</td>
-                  ${html`<td>${p.positions.map((pos: any) => html`<td>${pos}</td>`)}</td>`}
-                  ${this.getAttributeColumnValues(position, p)}
-                </tr>
-              `;
-            })}
-          </tbody>
-        </table>
-      </div>`
-    };
+    }));
+  };
 
     render() {
         this.setAttribute('id', this.id);
@@ -107,10 +50,10 @@ export default class WcViewTeam extends WcDynamicInteractiveElement {
             <div id=${this.id}>
                 <h2>${this.username}, here are the players in the ${this.team} squad</h2>
                 <p>Click on a player to view their attributes in detail, or return to the dashboard</p>
-                ${this.getPlayerTable('goalKeepers', goalKeepers)}
-                ${this.getPlayerTable('defenders', defenders)}
-                ${this.getPlayerTable('midfielders', midfielders)}
-                ${this.getPlayerTable('forwards', forwards)}
+                ${getPlayerTable('goalKeepers', goalKeepers, this.viewPlayer)}
+                ${getPlayerTable('defenders', defenders, this.viewPlayer)}
+                ${getPlayerTable('midfielders', midfielders, this.viewPlayer)}
+                ${getPlayerTable('forwards', forwards, this.viewPlayer)}
                 <button type="button" value=${this.pageLinks.dashboard} @click=${this.goToPage}>Return to Dashboard</button>
             </div>
         `;

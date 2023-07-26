@@ -79,7 +79,7 @@ export const deleteSavedGame = async (gameId: string) => {
 
 export const managePlayerGames = async (game: any, username: string, userId: string) => {
   const previouslySavedGame: any = await findSavedGameIdByUser(username, userId);
-
+  
   if(previouslySavedGame) {
     await deleteSavedGame(previouslySavedGame);
   }

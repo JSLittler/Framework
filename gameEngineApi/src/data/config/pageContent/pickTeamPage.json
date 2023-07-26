@@ -8,7 +8,17 @@
           [
             {
               "name": "pick-team",
-              "props": [{ "key": "id", "value": "pick-team" }]
+              "props": [
+                { "key": "id", "value": "pick-team" },
+                {
+                  "key": "pageLinks",
+                  "value": {
+                    "viewPlayer": "slm/game/team/:team/player/",
+                    "saveTeam": "slm/game/pick-team",
+                    "dashboard": "slm/game/saved"
+                  }
+                }
+              ]
             }
           ]
         }

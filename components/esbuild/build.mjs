@@ -91,7 +91,8 @@ const components = [
     { name: 'dashboard', path: './src/components/dashboard/index.ts'},
     { name: 'view-team', path: './src/components/viewTeam/index.ts'},
     { name: 'view-player', path: './src/components/viewPlayer/index.ts'},
-    { name: 'transfers', path: './src/components/transfers/index.ts'}
+    { name: 'transfers', path: './src/components/transfers/index.ts'},
+    { name: 'pick-team', path: './src/components/pickTeam/index.ts'}
 ];
 
 components.forEach((component) => bundleProject(component).then(() => {

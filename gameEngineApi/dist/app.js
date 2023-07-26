@@ -11,6 +11,7 @@ const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json({ limit: '5mb' }));
 app.use(body_parser_1.default.urlencoded({ extended: true }));
+app.use(body_parser_1.default.json());
 const PORT = 4002;
 (0, appRouter_1.default)(app);
 const server = app.listen(PORT, () => {

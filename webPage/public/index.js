@@ -27,7 +27,7 @@ const setCredentials = (username, password) => {
 
 const getCredentials = () => getLocalStorage()?.userDetails || '';
 
-const getPageState = async (endpoint = 'slm', headers = {}) => {
+const getPageState = async (endpoint = 'slm', headers = {}, body = {}) => {
   const { username, id } = getCredentials();
 
   if (username && id) {
@@ -35,19 +35,36 @@ const getPageState = async (endpoint = 'slm', headers = {}) => {
     headers.id = id;
   }
 
-  const { state, config } = await fetch(`${gameEngineAPI}${endpoint}`, {
-    method: 'GET',
-    headers: {
-      ...headers,
-    },
-  }).then(function(response) {
+  let request;
+  console.log('body: ', body);
 
-    return response.json();
-  });
+  if (body?.tactics) {
+    request = await fetch(`${gameEngineAPI}${endpoint}`, {
+      method: 'POST',
+      headers: {
+        ...headers,
+        ['Content-Type']: 'application/json'
+      },
+      body: JSON.stringify(body.tactics)
+    }).then(function(response) {
+  
+      return response.json();
+    });
+  } else {
+    request = await fetch(`${gameEngineAPI}${endpoint}`, {
+      method: 'GET',
+      headers: {
+        ...headers,
+      }
+    }).then(function(response) {
+  
+      return response.json();
+    });
+  }
 
   return {
-    state,
-    config
+    state: request.state,
+    config: request.config
   };
 };
 
@@ -114,7 +131,7 @@ const setUpPage = async (detail) => {
   body.classList.add('app-page');
   document.body = body;
 
-  const { state, config } = await getPageState(detail?.endpoint, detail?.headers);
+  const { state, config } = await getPageState(detail?.endpoint, detail?.headers, detail?.body);
   setLocalStorage(state);
 
   const { stylesheet, background, components, updates } = config;

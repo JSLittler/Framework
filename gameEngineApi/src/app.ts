@@ -8,6 +8,7 @@ const app: Application = express();
 app.use(cors());
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const PORT: number = 4002;
 
