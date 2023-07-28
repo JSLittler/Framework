@@ -228,10 +228,9 @@ export default class WcPickTeam extends WcDynamicInteractiveElement {
     
     render() {
         return html`
-            <div>
+            <div class="div-padding-bottom">
                 <h1>${this.username}, pick your team for matchday</h1>
                 <div id="pick-team" data-test="pick-team" className={styles.pickTeam}>
-                    <!-- {getNextGame(game)} -->
                     ${this.getFormations()}
                     ${this.displayPositions()}
                     ${this.displayPlayers()}

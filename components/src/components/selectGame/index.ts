@@ -57,7 +57,7 @@ export default class WcSelectGame extends WcDynamicInteractiveElement {
     const displayGame = () => this.playersTeam ? savedGameElement : noSavedGameElement;
 
     return html`
-        <div>
+        <div class="div-padding-bottom">
             ${displayGame()}
             <button id="new-game-button" type="button" @click=${this.newGameRequest}>Start a new game</button>
       </div>

@@ -15,7 +15,7 @@ var pt=Object.defineProperty,Ht=Object.defineProperties,Nt=Object.getOwnProperty
             <p>Hi ${this.username}, you do not currently have any saved games</p>
         </div>
     `;return Z`
-        <div>
+        <div class="div-padding-bottom">
             ${(()=>this.playersTeam?e:s)()}
             <button id="new-game-button" type="button" @click=${this.newGameRequest}>Start a new game</button>
       </div>

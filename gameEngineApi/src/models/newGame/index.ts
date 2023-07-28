@@ -57,38 +57,28 @@ const setupSquads = () => {
 };
 
 const createFixtureList = () => {
-  const teams: any = arrayShuffle(getTeamNames());
-  const fixtures: any = [];
-
-  for (let i = 1; i < teams.length; i++) {
-    teams.push(teams.shift());
-
-    const gameWeekTeams = [...teams];
-    const gameWeekFixtures: any = {
-      gameWeek: i,
-      fixtures: []
-    }; 
-
-    for (let i = 0; gameWeekTeams.length > 1; i++) {
-      gameWeekFixtures.fixtures.push({ home: gameWeekTeams.shift(), away: gameWeekTeams.shift() });
-    };
+  const teams: any = getTeamNames();
+  let fixtures: any = [];
+  const homeTeams: any = [];
+  const awayTeams: any = [];
     
-    fixtures.push(gameWeekFixtures);
+  teams.forEach((team: any, index: any) => index % 2 === 0 ? awayTeams.push(team) : homeTeams.push(team));
+
+  for (let index = 1; index < teams.length * 2 - 1; index++) {
+      const gameWeekFixtures: any = { gameWeek: index, fixtures: [] };
+
+      homeTeams.forEach((team: any, index: any) => {
+          gameWeekFixtures.fixtures.push({ home: team, away: awayTeams[index] });
+      })
+
+      const ht = homeTeams.pop();
+      const at = awayTeams.shift();
+
+      awayTeams.push(ht);
+      homeTeams.unshift(at);
+      
+      fixtures.push(gameWeekFixtures);
   };
-
-  for (let i = 1; i < teams.length; i++) {
-    const gameWeekFixtures: any = {
-      gameWeek: fixtures.length + 1,
-      fixtures: fixtures[i - 1].fixtures.map((gwf: any) => {
-        return {
-          home: gwf.away,
-          away: gwf.home
-        };
-      }),
-    };
-    
-    fixtures.push(gameWeekFixtures)
-  }
 
   return fixtures;
 };

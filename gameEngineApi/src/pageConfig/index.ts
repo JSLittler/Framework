@@ -6,6 +6,7 @@ const viewTeamComponents = require('../data/config/pageContent/viewTeamPage.json
 const viewPlayerComponents = require('../data/config/pageContent/viewPlayerPage.json');
 const transfersComponents = require('../data/config/pageContent/transfersPage.json');
 const pickTeamComponents = require('../data/config/pageContent/pickTeamPage.json');
+const playGameComponents = require('../data/config/pageContent/playGamePage.json');
 
 const getUpdate = (ids: Array<string>, attribute: string, stateAddress: string, setValue?: string) => {
     const update: any = {
@@ -87,7 +88,7 @@ export const getSlmViewPlayerPage = async (team: string, player: string) => {
     pageConfig.updates = updates;
 
     return pageConfig;
-}
+};
 
 export const getSlmTransfersPage = async () => {
     pageConfig.components = transfersComponents;
@@ -101,7 +102,8 @@ export const getSlmTransfersPage = async () => {
     pageConfig.updates = updates
 
     return pageConfig;
-}
+};
+
 export const getSlmPickTeamPage = async () => {
     pageConfig.components = pickTeamComponents;
 
@@ -115,5 +117,20 @@ export const getSlmPickTeamPage = async () => {
     pageConfig.updates = updates;
 
     return pageConfig;
-}
-export const getSlmPlayGamePage = async () => {}
+};
+
+export const getSlmPlayGamePage = async () => {
+    pageConfig.components = playGameComponents;
+
+    const updates = [
+        getUpdate(['play-game'], 'fixtures', 'game.fixtures'),
+        getUpdate(['play-game'], 'username', 'userDetails.username'),
+        getUpdate(['play-game'], 'playersTeam', 'game.playersTeam'),
+        getUpdate(['play-game'], 'gameWeek', 'game.gameWeek'),
+        getUpdate(['play-game'], 'leagueTable', 'game.leagueTable')
+    ];
+    
+    pageConfig.updates = updates;
+
+    return pageConfig;
+};

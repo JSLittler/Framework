@@ -2,6 +2,7 @@ import { Application } from "express";
 
 import { findUser } from '../database/userFunctions.js';
 import { setupNewGame } from "../models/newGame/index.js";
+import { simulateGames } from "../models/simulateGames/index.js";
 import { getSlmDashboardPage, getSlmViewTeamPage, getSlmViewPlayerPage, getSlmTransfersPage, getSlmPickTeamPage, getSlmPlayGamePage } from "../pageConfig/index.js";
 import { findGameByUser, managePlayerGames } from "../database/gameFunctions.js";
 
@@ -271,6 +272,9 @@ const gamesRoutes = (app: Application) => {
     }
 
     const savedGame = await findGameByUser(name, _id);
+    const updatedGame = await simulateGames(savedGame);
+    await managePlayerGames(updatedGame, name, _id);
+
     const config = await getSlmPlayGamePage();
     const userDetails = {
       id: _id,
@@ -281,7 +285,7 @@ const gamesRoutes = (app: Application) => {
     const response = {
       state: { 
         userDetails,
-        game: savedGame
+        game: updatedGame
       },
       config
     };

@@ -9,10 +9,10 @@ var pt=Object.defineProperty,Nt=Object.defineProperties,Ut=Object.getOwnProperty
             <td>${s.attributesAverages.find(i=>i.attributeName==="midfieldAverage").attributeFinalValue}</td>
             <td>${s.attributesAverages.find(i=>i.attributeName==="attackAverage").attributeFinalValue}</td>
         `;this.getPlayerTable=(e,s,i)=>g`<div>
-        <table class="table">
+        <table class="player-table">
           <thead>
             <tr>
-              <th><p>${e}</p></th>
+              <th colSpan="10"><p>${e}</p></th>
             </tr>
             <tr>
               <th>Name</th>

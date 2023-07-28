@@ -24,7 +24,7 @@ export default class WcLoginForm extends WcDynamicInteractiveElement {
   }
 
   render() {
-    return html`<div id="login-form">
+    return html`<div id="login-form" class="div-padding-bottom">
         <h1>SLM is available by invitation only.</h1>
         <h2>To play, please log into your account:</h2>
         <p id="message" class="message">{loginMessage here}</p>

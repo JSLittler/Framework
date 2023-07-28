@@ -25,11 +25,11 @@ const getAttributeColumnValues = (position: string, player: any) => {
 };
 
 const getPlayerTable = (position: string, players: any, playerCallback: any, highlightPlayerCallback = (playerName: any) => false) => {
-    return html`<div>
-    <table class="table">
+    return html`<div class="div-padding-bottom">
+    <table class="player-table">
       <thead>
         <tr>
-          <th>${position}</th>
+          <th colSpan="10">${position}</th>
         </tr>
         <tr>
           <th>Name</th>

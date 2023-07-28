@@ -51,34 +51,23 @@ const setupSquads = () => {
     return { teams: squads, transferList };
 };
 const createFixtureList = () => {
-    const teams = arrayShuffle((0, teamFunctions_1.getTeamNames)());
-    const fixtures = [];
-    for (let i = 1; i < teams.length; i++) {
-        teams.push(teams.shift());
-        const gameWeekTeams = [...teams];
-        const gameWeekFixtures = {
-            gameWeek: i,
-            fixtures: []
-        };
-        for (let i = 0; gameWeekTeams.length > 1; i++) {
-            gameWeekFixtures.fixtures.push({ home: gameWeekTeams.shift(), away: gameWeekTeams.shift() });
-        }
-        ;
+    const teams = (0, teamFunctions_1.getTeamNames)();
+    let fixtures = [];
+    const homeTeams = [];
+    const awayTeams = [];
+    teams.forEach((team, index) => index % 2 === 0 ? awayTeams.push(team) : homeTeams.push(team));
+    for (let index = 1; index < teams.length * 2 - 1; index++) {
+        const gameWeekFixtures = { gameWeek: index, fixtures: [] };
+        homeTeams.forEach((team, index) => {
+            gameWeekFixtures.fixtures.push({ home: team, away: awayTeams[index] });
+        });
+        const ht = homeTeams.pop();
+        const at = awayTeams.shift();
+        awayTeams.push(ht);
+        homeTeams.unshift(at);
         fixtures.push(gameWeekFixtures);
     }
     ;
-    for (let i = 1; i < teams.length; i++) {
-        const gameWeekFixtures = {
-            gameWeek: fixtures.length + 1,
-            fixtures: fixtures[i - 1].fixtures.map((gwf) => {
-                return {
-                    home: gwf.away,
-                    away: gwf.home
-                };
-            }),
-        };
-        fixtures.push(gameWeekFixtures);
-    }
     return fixtures;
 };
 const setupNewGame = async (username, userId) => {

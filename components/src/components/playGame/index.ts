@@ -3,19 +3,19 @@ import { customElement, property } from 'lit/decorators.js';
 
 import WcDynamicInteractiveElement from '../dynamicInterativeElement';
 
-@customElement('wc-dashboard')
-export default class WcDashboard extends WcDynamicInteractiveElement {
+@customElement('wc-play-game')
+export default class WcPlayGame extends WcDynamicInteractiveElement {
     @property()
     username: string | null = null;
+
+    @property()
+    playersTeam?: any;
 
     @property({ type: Object })
     leagueTable?: any;
 
     @property()
     gameWeek?: any;
-
-    @property({ type: Object })
-    playersTeam?: any;
 
     @property({ type: Object })
     fixtures?: any;
@@ -41,6 +41,45 @@ export default class WcDashboard extends WcDynamicInteractiveElement {
                 endpoint: `${this.pageLinks.viewTeam}${e.target.value}`
             }
         }));
+    };
+
+    getResultsTable() {
+        if (!this.fixtures) {
+            return html``;
+        }
+
+        const results = this.fixtures[this.gameWeek - 2].fixtures;
+
+        return html`
+            <div>
+                <table id='resultsTable' class="table">
+                    <thead>
+                        <tr>
+                            <th colSpan="10"><h2>Game Week ${this.gameWeek} Results</h2></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${results.map((r: any) => {
+                            const [homeTeam, awayTeam] = Object.keys(r.result);
+
+                            return html`<tr>
+                                <td>
+                                    <button type="button" class=${this.playersTeam.name === homeTeam ? 'button-small green-text' : 'button-small'} value=${homeTeam} @click=${this.goToTeam}>
+                                        ${homeTeam}
+                                    </button>
+                                </td>
+                                <td><b>${r.result[homeTeam]} - ${r.result[awayTeam]}</b></td>
+                                <td>
+                                    <button type="button" class=${this.playersTeam.name === awayTeam ? 'button-small green-text' : 'button-small'} value=${awayTeam} @click=${this.goToTeam}>
+                                        ${awayTeam}
+                                    </button>
+                                </td>
+                            </tr>`
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        `
     }
 
     getStandings() {
@@ -111,42 +150,13 @@ export default class WcDashboard extends WcDynamicInteractiveElement {
         `;
     };
 
-    getNextGame = () => {
-        if (!this.fixtures?.length) {
-            return html`
-              <div></div>
-            `;
-          }
-        
-          const gameWeekGames = this.fixtures.find((f: any) => f.gameWeek === this.gameWeek);
-          const nextGame = gameWeekGames.fixtures.find((g: any) => g.home === this.playersTeam.name || g.away === this.playersTeam.name);
-        
-          return html`
-            <div>
-              <h2>Next game</h2>
-                <p>(HOME) 
-                    <button type="button" class=${this.playersTeam.name === nextGame.home ? 'button-small green-text' : 'button-small'} value=${nextGame.home} @click=${this.goToTeam}>
-                        ${nextGame.home}
-                    </button>
-                     vs 
-                    <button type="button" class=${this.playersTeam.name === nextGame.away ? 'button-small green-text' : 'button-small'} value=${nextGame.away} @click=${this.goToTeam}>
-                        ${nextGame.away}
-                    </button>
-                     (AWAY)
-                </p>
-            </div>
-          `
-    };
-
     render() {
         return html`
             <div class="div-padding-bottom">
-                <h2>${this.username}, use the navigation buttons to select your next action</h2>
-                <button id="transfers-button" type="button" class="button-ball" value=${this.pageLinks.transfers} @click=${this.goToPage}>Transfer Players</button>
-                <button id="pick-team-button" type="button" class="button-ball" value=${this.pageLinks.pickTeam} @click=${this.goToPage}>Pick Team</button>
-                <button id="play-game-button" type="button" class="button-ball" value=${this.pageLinks.playGame} @click=${this.goToPage}>Play Game</button>
-                ${this.getNextGame()}
+                <h2>${this.username}, here are the results for game week ${this.gameWeek}</h2>
+                ${this.getResultsTable()}
                 ${this.getLeagueTable()}
+                <button type="button" value=${this.pageLinks.dashboard} @click=${this.goToPage}>Return to Dashboard</button>
             </div>
         `;
     };

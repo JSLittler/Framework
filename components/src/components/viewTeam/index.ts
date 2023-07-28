@@ -47,7 +47,7 @@ export default class WcViewTeam extends WcDynamicInteractiveElement {
         const { goalKeepers, defenders, midfielders, forwards } = squad;
 
         return html`
-            <div id=${this.id}>
+            <div id=${this.id} class="div-padding-bottom">
                 <h2>${this.username}, here are the players in the ${this.team} squad</h2>
                 <p>Click on a player to view their attributes in detail, or return to the dashboard</p>
                 ${getPlayerTable('goalKeepers', goalKeepers, this.viewPlayer)}

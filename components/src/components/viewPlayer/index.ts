@@ -51,7 +51,7 @@ export default class WcViewTeam extends WcDynamicInteractiveElement {
         const playerInView = this.getPlayer();
 
         return html`
-            <div id=${this.id}>
+            <div id=${this.id} class="div-padding-bottom">
                 <h2>${this.username}, here are the stats for ${this.player}</h2>
                 <p>Once you have completed your analysis, go back to his team page or return to the dashboard</p>
                 <div>

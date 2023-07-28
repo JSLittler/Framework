@@ -36,7 +36,6 @@ const getPageState = async (endpoint = 'slm', headers = {}, body = {}) => {
   }
 
   let request;
-  console.log('body: ', body);
 
   if (body?.tactics) {
     request = await fetch(`${gameEngineAPI}${endpoint}`, {

@@ -66,10 +66,10 @@ export default class WcTransfers extends WcDynamicInteractiveElement {
 
     getPlayerTable = (position: string, players: any, setTransfer: any) => {
         return html`<div>
-        <table class="table">
+        <table class="player-table">
           <thead>
             <tr>
-              <th><p>${position}</p></th>
+              <th colSpan="10"><p>${position}</p></th>
             </tr>
             <tr>
               <th>Name</th>

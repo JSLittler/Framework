@@ -6,13 +6,13 @@ var pt=Object.defineProperty,Nt=Object.defineProperties,Rt=Object.getOwnProperty
             <div>
               <h2>Next game</h2>
                 <p>(HOME) 
-                    <span class=${this.playersTeam.name===s.home?"green-text":""}>
+                    <button type="button" class=${this.playersTeam.name===s.home?"button-small green-text":"button-small"} value=${s.home} @click=${this.goToTeam}>
                         ${s.home}
-                    </span>
+                    </button>
                      vs 
-                    <span class=${this.playersTeam.name===s.away?"green-text":""}>
+                    <button type="button" class=${this.playersTeam.name===s.away?"button-small green-text":"button-small"} value=${s.away} @click=${this.goToTeam}>
                         ${s.away}
-                    </span>
+                    </button>
                      (AWAY)
                 </p>
             </div>
@@ -59,13 +59,13 @@ var pt=Object.defineProperty,Nt=Object.defineProperties,Rt=Object.getOwnProperty
                 </table>
             </div>
         `:C``}render(){return C`
-            <div>
+            <div class="div-padding-bottom">
                 <h2>${this.username}, use the navigation buttons to select your next action</h2>
-                <button id="transfers-button" type="button" class="button-ball" value=${this.pageLinks.transfers} @click=${this.goToPage}>Transfers</button>
+                <button id="transfers-button" type="button" class="button-ball" value=${this.pageLinks.transfers} @click=${this.goToPage}>Transfer Players</button>
                 <button id="pick-team-button" type="button" class="button-ball" value=${this.pageLinks.pickTeam} @click=${this.goToPage}>Pick Team</button>
                 <button id="play-game-button" type="button" class="button-ball" value=${this.pageLinks.playGame} @click=${this.goToPage}>Play Game</button>
-                ${this.getLeagueTable()}
                 ${this.getNextGame()}
+                ${this.getLeagueTable()}
             </div>
         `}};p([v()],f.prototype,"username",2),p([v({type:Object})],f.prototype,"leagueTable",2),p([v()],f.prototype,"gameWeek",2),p([v({type:Object})],f.prototype,"playersTeam",2),p([v({type:Object})],f.prototype,"fixtures",2),p([v()],f.prototype,"pageLinks",2),f=p([Ut("wc-dashboard")],f);export{f as default};
 /*! Bundled license information:

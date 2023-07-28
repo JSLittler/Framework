@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const userFunctions_js_1 = require("../database/userFunctions.js");
 const index_js_1 = require("../models/newGame/index.js");
-const index_js_2 = require("../pageConfig/index.js");
+const index_js_2 = require("../models/simulateGames/index.js");
+const index_js_3 = require("../pageConfig/index.js");
 const gameFunctions_js_1 = require("../database/gameFunctions.js");
 const gamesRoutes = (app) => {
     app.get('/slm/game/new', async (req, res) => {
@@ -11,7 +12,7 @@ const gamesRoutes = (app) => {
         if (!id || !username || _id.toString() !== (id === null || id === void 0 ? void 0 : id.toString())) {
             return res.status(401).json({});
         }
-        const config = await (0, index_js_2.getSlmDashboardPage)();
+        const config = await (0, index_js_3.getSlmDashboardPage)();
         const newGame = await (0, index_js_1.setupNewGame)(name, _id);
         const userDetails = {
             id: _id,
@@ -33,7 +34,7 @@ const gamesRoutes = (app) => {
         if (!id || !username || _id.toString() !== (id === null || id === void 0 ? void 0 : id.toString())) {
             return res.status(401).json({});
         }
-        const config = await (0, index_js_2.getSlmDashboardPage)();
+        const config = await (0, index_js_3.getSlmDashboardPage)();
         const savedGame = await (0, gameFunctions_js_1.findGameByUser)(name, _id);
         const userDetails = {
             id: _id,
@@ -57,7 +58,7 @@ const gamesRoutes = (app) => {
             return res.status(401).json({});
         }
         const savedGame = await (0, gameFunctions_js_1.findGameByUser)(name, _id);
-        const config = await (0, index_js_2.getSlmViewTeamPage)(team);
+        const config = await (0, index_js_3.getSlmViewTeamPage)(team);
         const userDetails = {
             id: _id,
             username: name,
@@ -80,7 +81,7 @@ const gamesRoutes = (app) => {
             return res.status(401).json({});
         }
         const savedGame = await (0, gameFunctions_js_1.findGameByUser)(name, _id);
-        const config = await (0, index_js_2.getSlmViewPlayerPage)(team, player);
+        const config = await (0, index_js_3.getSlmViewPlayerPage)(team, player);
         const userDetails = {
             id: _id,
             username: name,
@@ -102,7 +103,7 @@ const gamesRoutes = (app) => {
             return res.status(401).json({});
         }
         const savedGame = await (0, gameFunctions_js_1.findGameByUser)(name, _id);
-        const config = await (0, index_js_2.getSlmTransfersPage)();
+        const config = await (0, index_js_3.getSlmTransfersPage)();
         const userDetails = {
             id: _id,
             username: name,
@@ -149,7 +150,7 @@ const gamesRoutes = (app) => {
         transferList.squad[playerIn.group].push(playerOut.player);
         savedGame.transferList = transferList;
         await (0, gameFunctions_js_1.managePlayerGames)(savedGame, name, _id);
-        const config = await (0, index_js_2.getSlmTransfersPage)();
+        const config = await (0, index_js_3.getSlmTransfersPage)();
         const userDetails = {
             id: _id,
             username: name,
@@ -171,7 +172,7 @@ const gamesRoutes = (app) => {
             return res.status(401).json({});
         }
         const savedGame = await (0, gameFunctions_js_1.findGameByUser)(name, _id);
-        const config = await (0, index_js_2.getSlmPickTeamPage)();
+        const config = await (0, index_js_3.getSlmPickTeamPage)();
         const userDetails = {
             id: _id,
             username: name,
@@ -190,14 +191,13 @@ const gamesRoutes = (app) => {
         const { username, id } = req === null || req === void 0 ? void 0 : req.headers;
         const tactics = req.body;
         const { name, _id } = await (0, userFunctions_js_1.findUser)((username === null || username === void 0 ? void 0 : username.toString()) || '');
-        console.log('re.body : ', tactics);
         if (!id || !username || _id.toString() !== (id === null || id === void 0 ? void 0 : id.toString())) {
             return res.status(401).json({});
         }
         const savedGame = await (0, gameFunctions_js_1.findGameByUser)(name, _id);
         savedGame.playersTeam.tactics = tactics;
         await (0, gameFunctions_js_1.managePlayerGames)(savedGame, name, _id);
-        const config = await (0, index_js_2.getSlmDashboardPage)();
+        const config = await (0, index_js_3.getSlmDashboardPage)();
         const userDetails = {
             id: _id,
             username: name,
@@ -219,7 +219,9 @@ const gamesRoutes = (app) => {
             return res.status(401).json({});
         }
         const savedGame = await (0, gameFunctions_js_1.findGameByUser)(name, _id);
-        const config = await (0, index_js_2.getSlmPlayGamePage)();
+        const updatedGame = await (0, index_js_2.simulateGames)(savedGame);
+        await (0, gameFunctions_js_1.managePlayerGames)(updatedGame, name, _id);
+        const config = await (0, index_js_3.getSlmPlayGamePage)();
         const userDetails = {
             id: _id,
             username: name,
@@ -228,7 +230,7 @@ const gamesRoutes = (app) => {
         const response = {
             state: {
                 userDetails,
-                game: savedGame
+                game: updatedGame
             },
             config
         };
