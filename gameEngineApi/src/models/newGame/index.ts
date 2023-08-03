@@ -57,27 +57,44 @@ const setupSquads = () => {
 };
 
 const createFixtureList = () => {
-  const teams: any = getTeamNames();
-  let fixtures: any = [];
-  const homeTeams: any = [];
-  const awayTeams: any = [];
-    
-  teams.forEach((team: any, index: any) => index % 2 === 0 ? awayTeams.push(team) : homeTeams.push(team));
+  const teams: any = arrayShuffle(getTeamNames());
+  const fixtures: any = [];
 
-  for (let index = 1; index < teams.length * 2 - 1; index++) {
-      const gameWeekFixtures: any = { gameWeek: index, fixtures: [] };
+  const firstTeams: any = teams.slice(0, teams.length / 2);
+  const secondTeams: any = teams.slice(teams.length / 2);
 
-      homeTeams.forEach((team: any, index: any) => {
-          gameWeekFixtures.fixtures.push({ home: team, away: awayTeams[index] });
-      })
+  for (let i = 0; i < teams.length -1; i++) {
+      const fix: any = { gameWeek: i + 1, fixtures: [] }
 
-      const ht = homeTeams.pop();
-      const at = awayTeams.shift();
-
-      awayTeams.push(ht);
-      homeTeams.unshift(at);
+      firstTeams.forEach((team: any, index: any) => {
+          fix.fixtures.push({ home: team, away: secondTeams[index] });
+      });
       
-      fixtures.push(gameWeekFixtures);
+
+      fixtures.push(fix);
+
+      const movedFirstTeam = firstTeams.pop();
+      secondTeams.push(movedFirstTeam);
+      
+      const movedSecondTeam = secondTeams.shift();
+      firstTeams.splice(1, 0, movedSecondTeam);
+  };
+
+  for (let i = 0; i < teams.length -1; i++) {
+      const fix: any = { gameWeek: i + 9, fixtures: [] }
+
+      firstTeams.forEach((team: any, index: any) => {
+          fix.fixtures.push({ home: secondTeams[index], away: team });
+      });
+      
+
+      fixtures.push(fix);
+
+      const movedFirstTeam = firstTeams.pop();
+      secondTeams.push(movedFirstTeam);
+
+      const movedSecondTeam = secondTeams.shift();
+      firstTeams.splice(1, 0, movedSecondTeam);
   };
 
   return fixtures;
