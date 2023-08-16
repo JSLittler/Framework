@@ -1,22 +1,21 @@
 [
-    { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "Select game" }] },
-    {
-      "name": "main",
-      "props": [
-        { "key": "id", "value": "main" },
-        { "key": "value", "value": 
-          [
-            {
-              "name": "select-game",
-              "props": [
-                { "key": "id", "value": "select-game" },
-                { "key": "endpoint", "value": "slm/game/new" },
-                { "key": "savedGameEndpoint", "value": "slm/game/saved" }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    { "name": "footer", "props": [{ "key": "id", "value": "footer" }, { "key": "componentTitle", "value": "Select game" }] }
+  { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "Select game" }] },
+  {
+    "name": "main",
+    "props": [
+      { "key": "id", "value": "main" },
+      { "key": "value", "value": 
+        [
+          {
+            "name": "select-game",
+            "props": [
+              { "key": "id", "value": "select-game" },
+              { "key": "endpoint", "value": "slm/game/new" },
+              { "key": "savedGameEndpoint", "value": "slm/game/saved" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ]

@@ -3,9 +3,8 @@ import { createLeagueTable } from '../leagueFunctions';
 const arrayShuffle = (array: any) => array.sort((a: any, b: any) => 0.5 - Math.random());
 
 export const simulateGames = async (game: any) => {
-  const { _id, owner, formations, playersTeam, oppositionTeams, transferList, gameWeek, fixtures } = game;
-
-  //maybe make this a function and just return the selected players
+  const { _id, owner, formations, playersTeam, oppositionTeams, transferList, season, prevSeasons, gameWeek, fixtures } = game;
+  
   const getSelectedTeam = (team: any) => {
     const selectedFormation = arrayShuffle(formations)[0];
     team.tactics = { formation: selectedFormation.name, selectedTeam: selectedFormation.teamShape };
@@ -19,11 +18,29 @@ export const simulateGames = async (game: any) => {
     }
   };
 
+  const getPlayer = (p: any) => {
+    return playersTeam.squad.goalKeepers.find((gk: any) => gk.name === p.player) || 
+    playersTeam.squad.defenders.find((def: any) => def.name === p.player) ||
+    playersTeam.squad.midfielders.find((mid: any) => mid.name === p.player) ||
+    playersTeam.squad.forwards.find((att: any) => att.name === p.player)
+  }
+
+  const getPlayersSelectedTeam = () => {
+    const { goalkeeper, defence, midfield, forwards } = playersTeam.tactics.selectedTeam;
+
+    return {
+      selectedGoalkeeper: goalkeeper.map((p: any) => getPlayer(p))[0],
+      selectedDefenders: defence.map((p: any) => getPlayer(p)),
+      selectedMidfielders: midfield.map((p: any) => getPlayer(p)),
+      selectedForwards: forwards.map((p: any) => getPlayer(p))
+    }
+  }
+
   const playGame = (fixture: any) => {
     const { home, away } = fixture;
     
-    const homeTeam: any = home === playersTeam.name ? getSelectedTeam(playersTeam) : getSelectedTeam(oppositionTeams.find((team: any) => team.name === home));
-    const awayTeam: any = away === playersTeam.name ? getSelectedTeam(playersTeam) : getSelectedTeam(oppositionTeams.find((team : any) => team.name === away));;
+    const homeTeam: any = home === playersTeam.name ? getPlayersSelectedTeam() : getSelectedTeam(oppositionTeams.find((team: any) => team.name === home));
+    const awayTeam: any = away === playersTeam.name ? getPlayersSelectedTeam() : getSelectedTeam(oppositionTeams.find((team : any) => team.name === away));;
 
     let homeDefTotal = 0
     homeTeam.selectedDefenders.forEach((player: any) => {
@@ -39,7 +56,8 @@ export const simulateGames = async (game: any) => {
     homeTeam.selectedForwards.forEach((player: any) => {
       homeAttTotal += player.attributesAverages.find((attribute: any) => attribute.attributeName === 'attackAverage').attributeFinalValue;
     });
-
+    const homeAttAverage = Math.round(homeAttTotal / homeTeam.selectedForwards.length)
+    
     const awayTeamGK = awayTeam.selectedGoalkeeper;
 
     let awayDefTotal = 0
@@ -56,6 +74,8 @@ export const simulateGames = async (game: any) => {
     awayTeam.selectedForwards.forEach((player: any) => {
       awayAttTotal += player.attributesAverages.find((attribute: any) => attribute.attributeName === 'attackAverage').attributeFinalValue;
     });
+
+    const awayAttAverage = Math.round(awayAttTotal / awayTeam.selectedForwards.length)
     
     const homePossession = Math.round((homeMidTotal / (homeMidTotal + awayMidTotal)) * 100);
     const awayPossession = Math.round((awayMidTotal / (homeMidTotal + awayMidTotal)) * 100);
@@ -65,14 +85,14 @@ export const simulateGames = async (game: any) => {
     
     let homeGoals = 0;
     for (let index = 0; index < homeShotsCreated; index++) {
-      if (Math.round(Math.random() * 100) > homeTeam.selectedGoalkeeper.attributesAverages.find((att: any) => att.attributeName === 'goalKeeperAverage').attributeFinalValue) {
+      if (Math.round(Math.random() * homeAttAverage + 10) > homeTeam.selectedGoalkeeper.attributesAverages.find((att: any) => att.attributeName === 'goalKeeperAverage').attributeFinalValue) {
         homeGoals++;
       }
     };
 
     let awayGoals = 0;
     for (let index = 0; index < awayShotsCreated; index++) {
-      if (Math.round(Math.random() * 100) > awayTeam.selectedGoalkeeper.attributesAverages.find((att: any) => att.attributeName === 'goalKeeperAverage').attributeFinalValue) {
+      if (Math.round(Math.random() * awayAttAverage + 6) > awayTeam.selectedGoalkeeper.attributesAverages.find((att: any) => att.attributeName === 'goalKeeperAverage').attributeFinalValue) {
         awayGoals++;
       }
     };
@@ -141,8 +161,8 @@ export const simulateGames = async (game: any) => {
         lost: isDefeat ? lost + 1 : lost,
         drawn: isDraw ? drawn + 1 : drawn,
         goalsFor: goalsFor + result[name],
-        goalsAgainst: isHome ? result[away] : result[home],
-        goalDifference: (goalsFor + result[name]) - (goalsAgainst + isHome ? result[away] : result[home]),
+        goalsAgainst: goalsAgainst + (isHome ? result[away] : result[home]),
+        goalDifference: (goalsFor + result[name]) - (goalsAgainst + (isHome ? result[away] : result[home])),
       }
     }
   }
@@ -173,6 +193,9 @@ export const simulateGames = async (game: any) => {
     playersTeam: currentPlayersTeam,
     oppositionTeams: updatedOppositionTeams,
     transferList: updatedTransferList,
+    season,
+    endSeason: gameWeek + 1 > updatedOppositionTeams.length * 2,
+    prevSeasons,
     gameWeek: gameWeek + 1,
     fixtures: currentFixtures,
     leagueTable: createLeagueTable([currentPlayersTeam, ...updatedOppositionTeams]),

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSlmPlayGamePage = exports.getSlmPickTeamPage = exports.getSlmTransfersPage = exports.getSlmViewPlayerPage = exports.getSlmViewTeamPage = exports.getSlmDashboardPage = exports.getSlmSelectGamePage = exports.getSlmLoginPage = void 0;
+exports.getSlmEndSeasonPage = exports.getSlmPlayGamePage = exports.getSlmPickTeamPage = exports.getSlmTransfersPage = exports.getSlmViewPlayerPage = exports.getSlmViewTeamPage = exports.getSlmDashboardPage = exports.getSlmSelectGamePage = exports.getSlmLoginPage = void 0;
 const pageConfig = require('../data/config/pageOutline/slmPageOutline.json');
 const loginPageComponents = require('../data/config/pageContent/slmLoginPage.json');
 const selectGameComponents = require('../data/config/pageContent/slmSelectGamePage.json');
@@ -10,6 +10,7 @@ const viewPlayerComponents = require('../data/config/pageContent/viewPlayerPage.
 const transfersComponents = require('../data/config/pageContent/transfersPage.json');
 const pickTeamComponents = require('../data/config/pageContent/pickTeamPage.json');
 const playGameComponents = require('../data/config/pageContent/playGamePage.json');
+const endSeasonComponents = require('../data/config/pageContent/endSeasonPage.json');
 const getUpdate = (ids, attribute, stateAddress, setValue) => {
     const update = {
         componentIds: [],
@@ -43,6 +44,7 @@ const getSlmDashboardPage = async () => {
     const updates = [
         getUpdate(['dashboard'], 'username', 'userDetails.username'),
         getUpdate(['dashboard'], 'leagueTable', 'game.leagueTable'),
+        getUpdate(['dashboard'], 'season', 'game.season'),
         getUpdate(['dashboard'], 'gameWeek', 'game.gameWeek'),
         getUpdate(['dashboard'], 'playersTeam', 'game.playersTeam'),
         getUpdate(['dashboard'], 'fixtures', 'game.fixtures')
@@ -93,7 +95,9 @@ const getSlmPickTeamPage = async () => {
         getUpdate(['pick-team'], 'username', 'userDetails.username'),
         getUpdate(['pick-team'], 'playersTeam', 'game.playersTeam'),
         getUpdate(['pick-team'], 'formations', 'game.formations'),
-        getUpdate(['pick-team'], 'fixtures', 'game.fixtures')
+        getUpdate(['pick-team'], 'fixtures', 'game.fixtures'),
+        getUpdate(['pick-team'], 'selectedFormation', 'game.playersTeam.tactics.formation'),
+        getUpdate(['pick-team'], 'teamShape', 'game.playersTeam.tactics.selectedTeam')
     ];
     pageConfig.updates = updates;
     return pageConfig;
@@ -106,9 +110,22 @@ const getSlmPlayGamePage = async () => {
         getUpdate(['play-game'], 'username', 'userDetails.username'),
         getUpdate(['play-game'], 'playersTeam', 'game.playersTeam'),
         getUpdate(['play-game'], 'gameWeek', 'game.gameWeek'),
-        getUpdate(['play-game'], 'leagueTable', 'game.leagueTable')
+        getUpdate(['play-game'], 'leagueTable', 'game.leagueTable'),
+        getUpdate(['play-game'], 'endSeason', 'game.endSeason'),
     ];
     pageConfig.updates = updates;
     return pageConfig;
 };
 exports.getSlmPlayGamePage = getSlmPlayGamePage;
+const getSlmEndSeasonPage = async () => {
+    pageConfig.components = endSeasonComponents;
+    const updates = [
+        getUpdate(['end-season'], 'prevSeasons', 'game.prevSeasons'),
+        getUpdate(['end-season'], 'username', 'userDetails.username'),
+        getUpdate(['end-season'], 'playersTeam', 'game.playersTeam'),
+        getUpdate(['end-season'], 'season', 'game.season'),
+    ];
+    pageConfig.updates = updates;
+    return pageConfig;
+};
+exports.getSlmEndSeasonPage = getSlmEndSeasonPage;

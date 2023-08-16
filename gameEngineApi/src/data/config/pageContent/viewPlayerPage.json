@@ -1,27 +1,26 @@
 [
-    { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "View Player" }] },
-    {
-      "name": "main",
-      "props": [
-        { "key": "id", "value": "main" },
-        { "key": "value", "value": 
-          [
-            {
-              "name": "view-player",
-              "props": [
-                { "key": "id", "value": "view-player" },
-                {
-                  "key": "pageLinks",
-                  "value": {
-                    "viewTeam": "slm/game/team/",
-                    "dashboard": "slm/game/saved"
-                  }
+  { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "View Player" }] },
+  {
+    "name": "main",
+    "props": [
+      { "key": "id", "value": "main" },
+      { "key": "value", "value": 
+        [
+          {
+            "name": "view-player",
+            "props": [
+              { "key": "id", "value": "view-player" },
+              {
+                "key": "pageLinks",
+                "value": {
+                  "viewTeam": "slm/game/team/",
+                  "dashboard": "slm/game/saved"
                 }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    { "name": "footer", "props": [{ "key": "id", "value": "footer" }, { "key": "componentTitle", "value": "View Player" }] }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ]

@@ -1,28 +1,27 @@
 [
-    { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "Pick Team" }] },
-    {
-      "name": "main",
-      "props": [
-        { "key": "id", "value": "main" },
-        { "key": "value", "value": 
-          [
-            {
-              "name": "pick-team",
-              "props": [
-                { "key": "id", "value": "pick-team" },
-                {
-                  "key": "pageLinks",
-                  "value": {
-                    "viewPlayer": "slm/game/team/:team/player/",
-                    "saveTeam": "slm/game/pick-team",
-                    "dashboard": "slm/game/saved"
-                  }
+  { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "Pick Team" }] },
+  {
+    "name": "main",
+    "props": [
+      { "key": "id", "value": "main" },
+      { "key": "value", "value": 
+        [
+          {
+            "name": "pick-team",
+            "props": [
+              { "key": "id", "value": "pick-team" },
+              {
+                "key": "pageLinks",
+                "value": {
+                  "viewPlayer": "slm/game/team/:team/player/",
+                  "saveTeam": "slm/game/pick-team",
+                  "dashboard": "slm/game/saved"
                 }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    { "name": "footer", "props": [{ "key": "id", "value": "footer" }, { "key": "componentTitle", "value": "Pick Team" }] }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ]

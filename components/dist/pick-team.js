@@ -63,7 +63,7 @@ var mt=Object.defineProperty,Tt=Object.defineProperties,Rt=Object.getOwnProperty
                     ${this.getPositionSelect(o,"forwards")}
             </tbody>
           </table>
-        `};this.isPlayerAlreadySelected=e=>{let s=!1;return Object.keys(this.teamShape).forEach(i=>this.teamShape[i].forEach(o=>{o.player===e&&(s=!0)})),s};this.viewSelectPlayer=e=>{if(!this.selectedPosition){console.log("viewPlayer: ",this.pageLinks.viewPlayer);let o=this.pageLinks.viewPlayer.replace(":team",this.playersTeam.name);return e.target.dispatchEvent(new CustomEvent("updatePage",{bubbles:!0,detail:{endpoint:`${o}${e.target.value}`}}))}let s=this.selectedPosition.split("--")[0],i=this.selectedPosition.split("--")[1];this.isPlayerAlreadySelected(e.target.value)||(this.teamShape[s].find(o=>o.position===i).player=e.target.value),this.selectedPosition=""};this.getFormations=()=>{var e;return c`
+        `};this.isPlayerAlreadySelected=e=>{let s=!1;return Object.keys(this.teamShape).forEach(i=>this.teamShape[i].forEach(o=>{o.player===e&&(s=!0)})),s};this.viewSelectPlayer=e=>{if(!this.selectedPosition){let o=this.pageLinks.viewPlayer.replace(":team",this.playersTeam.name);return e.target.dispatchEvent(new CustomEvent("updatePage",{bubbles:!0,detail:{endpoint:`${o}${e.target.value}`}}))}let s=this.selectedPosition.split("--")[0],i=this.selectedPosition.split("--")[1];this.isPlayerAlreadySelected(e.target.value)||(this.teamShape[s].find(o=>o.position===i).player=e.target.value),this.selectedPosition=""};this.getFormations=()=>{var e;return c`
             <div>
                 <table id='squad' class="table-centered">
                     <thead>

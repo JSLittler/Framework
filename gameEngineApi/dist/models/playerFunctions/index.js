@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPlayers = exports.updatePlayerAttributes = void 0;
+exports.getPlayers = exports.addOutfieldAverages = exports.addGoalKeeperAverage = exports.updatePlayerAttributes = void 0;
 const attributeConstants_1 = __importDefault(require("../../constants/attributeConstants"));
 const players = {
     ['defenders']: require('../../data/players/defenders.json'),
@@ -13,7 +13,7 @@ const players = {
 };
 const { DEFENCE_ATTRIBUTES, ATTACK_ATTRIBUTES } = attributeConstants_1.default;
 const updateAttributeValue = (attributeValue) => {
-    const updatedValue = attributeValue += Math.floor(Math.random() * 20);
+    const updatedValue = attributeValue += Math.floor(Math.random() * 30);
     return updatedValue < 100 ? updatedValue : 100;
 };
 const updatePlayerAttributes = (basePlayers) => {
@@ -42,6 +42,7 @@ const addGoalKeeperAverage = (player) => {
     const { attributes } = player;
     return Object.assign(Object.assign({}, player), { attributesAverages: [{ attributeName: 'goalKeeperAverage', attributeFinalValue: getAverageAttribute(attributes) }] });
 };
+exports.addGoalKeeperAverage = addGoalKeeperAverage;
 const getAttributes = (attributesArray, attributeNames) => {
     return attributesArray.filter((a) => attributeNames.includes(a.attributeName));
 };
@@ -55,10 +56,11 @@ const addOutfieldAverages = (player) => {
             { attributeName: 'attackAverage', attributeFinalValue: getAverageAttribute(attackAttributes) },
         ] });
 };
+exports.addOutfieldAverages = addOutfieldAverages;
 const getPlayers = (position) => {
     const playerDirectory = players;
     const selectedPlayers = playerDirectory[position];
     const updatedPlayers = (0, exports.updatePlayerAttributes)(selectedPlayers);
-    return updatedPlayers.map((p) => p.positions.includes('GK') ? addGoalKeeperAverage(p) : addOutfieldAverages(p));
+    return updatedPlayers.map((p) => p.positions.includes('GK') ? (0, exports.addGoalKeeperAverage)(p) : (0, exports.addOutfieldAverages)(p));
 };
 exports.getPlayers = getPlayers;

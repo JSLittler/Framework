@@ -1,5 +1,5 @@
 [
-  { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "View Player" }] },
+  { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "End Season" }] },
   {
     "name": "main",
     "props": [
@@ -7,13 +7,12 @@
       { "key": "value", "value": 
         [
           {
-            "name": "view-player",
+            "name": "end-season",
             "props": [
-              { "key": "id", "value": "view-player" },
+              { "key": "id", "value": "end-season" },
               {
                 "key": "pageLinks",
                 "value": {
-                  "viewTeam": "slm/game/team/",
                   "dashboard": "slm/game/saved"
                 }
               }

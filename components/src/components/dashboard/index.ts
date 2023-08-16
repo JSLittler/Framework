@@ -12,6 +12,9 @@ export default class WcDashboard extends WcDynamicInteractiveElement {
     leagueTable?: any;
 
     @property()
+    season?: any;
+
+    @property()
     gameWeek?: any;
 
     @property({ type: Object })
@@ -41,6 +44,38 @@ export default class WcDashboard extends WcDynamicInteractiveElement {
                 endpoint: `${this.pageLinks.viewTeam}${e.target.value}`
             }
         }));
+    }
+
+    isTeamUnselected() {
+        const { tactics } = this.playersTeam || { tactics: { formation: '', selectedTeam: [] } };
+        const { formation, selectedTeam } = tactics;
+
+        if (!formation || !selectedTeam.goalkeeper[0]?.player) {
+            return true;
+        }
+
+        const [def, mid, att] = formation.split('-');
+        const { defence, midfield, forwards } = selectedTeam; 
+
+        for (let i = 0; i < def; i++) {
+            if (!defence[i].player) {
+                return true
+            }
+        }
+
+        for (let i = 0; i < mid; i++) {
+            if (!midfield[i].player) {
+                return true
+            }
+        }
+
+        for (let i = 0; i < att; i++) {
+            if (!forwards[i].player) {
+                return true
+            }
+        }
+
+        return false
     }
 
     getStandings() {
@@ -88,7 +123,7 @@ export default class WcDashboard extends WcDynamicInteractiveElement {
                 <table id='leagueTable' class="table">
                     <thead>
                         <tr>
-                            <th colSpan="10"><h2>League Table</h2></th>
+                            <th colSpan="10"><h2>Season ${this.season} League Table</h2></th>
                         </tr>
                         <tr>
                             <th>Pos</th>
@@ -123,7 +158,7 @@ export default class WcDashboard extends WcDynamicInteractiveElement {
         
           return html`
             <div>
-              <h2>Next game</h2>
+              <h2>Season ${this.season} - Game Week ${this.gameWeek}</h2>
                 <p>(HOME) 
                     <button type="button" class=${this.playersTeam.name === nextGame.home ? 'button-small green-text' : 'button-small'} value=${nextGame.home} @click=${this.goToTeam}>
                         ${nextGame.home}
@@ -142,9 +177,11 @@ export default class WcDashboard extends WcDynamicInteractiveElement {
         return html`
             <div class="div-padding-bottom">
                 <h2>${this.username}, use the navigation buttons to select your next action</h2>
-                <button id="transfers-button" type="button" class="button-ball" value=${this.pageLinks.transfers} @click=${this.goToPage}>Transfer Players</button>
-                <button id="pick-team-button" type="button" class="button-ball" value=${this.pageLinks.pickTeam} @click=${this.goToPage}>Pick Team</button>
-                <button id="play-game-button" type="button" class="button-ball" value=${this.pageLinks.playGame} @click=${this.goToPage}>Play Game</button>
+                <div class="button-ball-container">
+                    <button id="transfers-button" type="button" class="button-ball" value=${this.pageLinks.transfers} @click=${this.goToPage}>Transfer Players</button>
+                    <button id="pick-team-button" type="button" class="button-ball" value=${this.pageLinks.pickTeam} @click=${this.goToPage}>Pick Team</button>
+                    <button id="play-game-button" type="button" class="button-ball" value=${this.pageLinks.playGame} @click=${this.goToPage} ?disabled=${this.isTeamUnselected()}>Play Game</button>
+                </div>
                 ${this.getNextGame()}
                 ${this.getLeagueTable()}
             </div>

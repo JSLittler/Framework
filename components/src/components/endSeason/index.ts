@@ -3,25 +3,19 @@ import { customElement, property } from 'lit/decorators.js';
 
 import WcDynamicInteractiveElement from '../dynamicInterativeElement';
 
-@customElement('wc-play-game')
-export default class WcPlayGame extends WcDynamicInteractiveElement {
+@customElement('wc-end-season')
+export default class WcEndSeason extends WcDynamicInteractiveElement {
     @property()
     username: string | null = null;
 
     @property()
     playersTeam?: any;
 
-    @property({ type: Object })
-    leagueTable?: any;
-
     @property()
-    gameWeek?: any;
-
-    @property({ type: Boolean })
-    endSeason = false;
+    season: any = 2;
 
     @property({ type: Object })
-    fixtures?: any;
+    prevSeasons?: any;
 
     @property()
     pageLinks?: any;
@@ -46,47 +40,8 @@ export default class WcPlayGame extends WcDynamicInteractiveElement {
         }));
     };
 
-    getResultsTable() {
-        if (!this.fixtures) {
-            return html``;
-        }
-
-        const results = this.fixtures[this.gameWeek - 2].fixtures;
-
-        return html`
-            <div>
-                <table id='resultsTable' class="table">
-                    <thead>
-                        <tr>
-                            <th colSpan="10"><h2>Game Week ${this.gameWeek - 1} Results</h2></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${results.map((r: any) => {
-                            const [homeTeam, awayTeam] = Object.keys(r.result);
-
-                            return html`<tr>
-                                <td>
-                                    <button type="button" class=${this.playersTeam.name === homeTeam ? 'button-small green-text' : 'button-small'} value=${homeTeam} @click=${this.goToTeam}>
-                                        ${homeTeam}
-                                    </button>
-                                </td>
-                                <td><b>${r.result[homeTeam]} - ${r.result[awayTeam]}</b></td>
-                                <td>
-                                    <button type="button" class=${this.playersTeam.name === awayTeam ? 'button-small green-text' : 'button-small'} value=${awayTeam} @click=${this.goToTeam}>
-                                        ${awayTeam}
-                                    </button>
-                                </td>
-                            </tr>`
-                        })}
-                    </tbody>
-                </table>
-            </div>
-        `
-    }
-
     getStandings() {
-        return this.leagueTable.map((team: any, index: any) => {
+        return this.prevSeasons.find((s: any) => s.season === this.season - 1).table.map((team: any, index: any) => {
             const {
               name,
               played,
@@ -123,7 +78,7 @@ export default class WcPlayGame extends WcDynamicInteractiveElement {
     };
 
     getLeagueTable() {
-        if (!this.leagueTable) return html``;
+        if (!this.prevSeasons?.length) return html``;
 
         return html`
             <div>
@@ -153,21 +108,12 @@ export default class WcPlayGame extends WcDynamicInteractiveElement {
         `;
     };
 
-    getButton() {
-        if (this.endSeason) {
-            return html`<button type="button" value=${this.pageLinks.endSeason} @click=${this.goToPage}>End Season</button>`
-        }
-
-        return html`<button type="button" value=${this.pageLinks.dashboard} @click=${this.goToPage}>Return to Dashboard</button>`
-    }
-
     render() {
         return html`
             <div class="div-padding-bottom">
-                <h2>${this.username}, here are the results for game week ${this.gameWeek - 1}</h2>
-                ${this.getResultsTable()}
+                <h2>${this.username}, here are the final standings for last season</h2>
                 ${this.getLeagueTable()}
-                ${this.getButton()}
+                <button type="button" value=${this.pageLinks.dashboard} @click=${this.goToPage}>Return to Dashboard</button>
             </div>
         `;
     };

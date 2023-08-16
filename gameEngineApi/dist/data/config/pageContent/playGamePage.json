@@ -1,27 +1,27 @@
 [
-    { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "Play Game" }] },
-    {
-      "name": "main",
-      "props": [
-        { "key": "id", "value": "main" },
-        { "key": "value", "value": 
-          [
-            {
-              "name": "play-game",
-              "props": [
-                { "key": "id", "value": "play-game" },
-                {
-                  "key": "pageLinks",
-                  "value": {
-                    "dashboard": "slm/game/saved",
-                    "viewTeam": "slm/game/team/"
-                  }
+  { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "Play Game" }] },
+  {
+    "name": "main",
+    "props": [
+      { "key": "id", "value": "main" },
+      { "key": "value", "value": 
+        [
+          {
+            "name": "play-game",
+            "props": [
+              { "key": "id", "value": "play-game" },
+              {
+                "key": "pageLinks",
+                "value": {
+                  "dashboard": "slm/game/saved",
+                  "viewTeam": "slm/game/team/",
+                  "endSeason": "slm/game/end-season"
                 }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    { "name": "footer", "props": [{ "key": "id", "value": "footer" }, { "key": "componentTitle", "value": "Play Game" }] }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ]

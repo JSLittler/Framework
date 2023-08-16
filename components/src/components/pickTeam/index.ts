@@ -138,7 +138,6 @@ export default class WcPickTeam extends WcDynamicInteractiveElement {
 
     viewSelectPlayer = (e: any) => {
         if (!this.selectedPosition) {
-            console.log('viewPlayer: ', this.pageLinks.viewPlayer);
             const viewPlayerUrl = this.pageLinks.viewPlayer.replace(':team', this.playersTeam.name);
     
             return e.target.dispatchEvent(new CustomEvent('updatePage', {

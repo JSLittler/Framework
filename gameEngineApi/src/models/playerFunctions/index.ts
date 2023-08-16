@@ -11,7 +11,7 @@ const players = {
 const { DEFENCE_ATTRIBUTES, ATTACK_ATTRIBUTES } = ATTRIBUTE_CONSTANTS;
 
 const updateAttributeValue = (attributeValue: any) => {
-  const updatedValue = attributeValue += Math.floor(Math.random() * 20);
+  const updatedValue = attributeValue += Math.floor(Math.random() * 30);
 
   return updatedValue < 100 ? updatedValue : 100;
 };
@@ -41,7 +41,7 @@ const getAverageAttribute = (attributes: any) => {
   return Math.round(attributeTotals.reduce((a: any, b: any) => a + b) / attributeTotals.length);
 }
 
-const addGoalKeeperAverage = (player: any) => {
+export const addGoalKeeperAverage = (player: any) => {
   const { attributes } = player;
 
   return {
@@ -54,7 +54,7 @@ const getAttributes = (attributesArray: any, attributeNames: any) => {
   return attributesArray.filter((a: any) => attributeNames.includes(a.attributeName));
 };
 
-const addOutfieldAverages = (player: any) => {
+export const addOutfieldAverages = (player: any) => {
   const { attributes } = player;
   const defenceAttributes = getAttributes(attributes, DEFENCE_ATTRIBUTES);
   const attackAttributes = getAttributes(attributes, ATTACK_ATTRIBUTES);

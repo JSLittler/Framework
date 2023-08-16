@@ -236,5 +236,29 @@ const gamesRoutes = (app) => {
         };
         return res.send(response);
     });
+    app.get('/slm/game/end-season', async (req, res) => {
+        const { username, id } = req === null || req === void 0 ? void 0 : req.headers;
+        const { name, _id } = await (0, userFunctions_js_1.findUser)((username === null || username === void 0 ? void 0 : username.toString()) || '');
+        if (!id || !username || _id.toString() !== (id === null || id === void 0 ? void 0 : id.toString())) {
+            return res.status(401).json({});
+        }
+        const savedGame = await (0, gameFunctions_js_1.findGameByUser)(name, _id);
+        const updatedGame = await (0, index_js_1.createNewSeason)(savedGame);
+        await (0, gameFunctions_js_1.managePlayerGames)(updatedGame, name, _id);
+        const config = await (0, index_js_3.getSlmEndSeasonPage)();
+        const userDetails = {
+            id: _id,
+            username: name,
+            loggedIn: true
+        };
+        const response = {
+            state: {
+                userDetails,
+                game: updatedGame
+            },
+            config
+        };
+        return res.send(response);
+    });
 };
 exports.default = gamesRoutes;

@@ -5,14 +5,14 @@
     "positions": ["CF"],
     "attributes": [
       { "tackling": 35 },
-      { "positioning": 65 },
+      { "positioning": 70 },
       { "interceptions": 40 },
       { "discipline": 70 },
       { "physical": 60 },
       { "heading": 65 },
       { "pace": 55 },
-      { "acceleration": 55 },
-      { "passing": 65 },
+      { "acceleration": 60 },
+      { "passing": 70 },
       { "creativity": 75 },
       { "control": 70 },
       { "dribbling": 55 },
@@ -31,11 +31,11 @@
       { "physical": 70 },
       { "heading": 70 },
       { "pace": 55 },
-      { "acceleration": 55 },
+      { "acceleration": 60 },
       { "passing": 50 },
       { "creativity": 50 },
       { "control": 60 },
-      { "dribbling": 50 },
+      { "dribbling": 55 },
       { "shooting": 80 }
     ]
   },
@@ -52,11 +52,11 @@
       { "heading": 65 },
       { "pace": 60 },
       { "acceleration": 70 },
-      { "passing": 70 },
-      { "creativity": 70 },
+      { "passing": 75 },
+      { "creativity": 75 },
       { "control": 70 },
       { "dribbling": 60 },
-      { "shooting": 70 }
+      { "shooting": 75 }
     ]
   },
   {
@@ -73,8 +73,8 @@
       { "pace": 80 },
       { "acceleration": 80 },
       { "passing": 65 },
-      { "creativity": 70 },
-      { "control": 70 },
+      { "creativity": 75 },
+      { "control": 75 },
       { "dribbling": 70 },
       { "shooting": 65 }
     ]
@@ -113,9 +113,9 @@
       { "pace": 75 },
       { "acceleration": 80 },
       { "passing": 70 },
-      { "creativity": 70 },
+      { "creativity": 75 },
       { "control": 70 },
-      { "dribbling": 65 },
+      { "dribbling": 70 },
       { "shooting": 70 }
     ]
   },
@@ -171,7 +171,7 @@
       { "physical": 75 },
       { "heading": 75 },
       { "pace": 70 },
-      { "acceleration": 65 },
+      { "acceleration": 70 },
       { "passing": 70 },
       { "creativity": 70 },
       { "control": 65 },
@@ -204,15 +204,15 @@
     "club": "Manchester United",
     "positions": ["CF"],
     "attributes": [
-      { "tackling": 55 },
+      { "tackling": 60 },
       { "positioning": 65 },
-      { "interceptions": 50 },
+      { "interceptions": 60 },
       { "discipline": 60 },
       { "physical": 80 },
       { "heading": 60 },
       { "pace": 65 },
-      { "acceleration": 70 },
-      { "passing": 70 },
+      { "acceleration": 75 },
+      { "passing": 75 },
       { "creativity": 70 },
       { "control": 70 },
       { "dribbling": 65 },
@@ -256,7 +256,7 @@
       { "creativity": 75 },
       { "control": 80 },
       { "dribbling": 80 },
-      { "shooting": 70 }
+      { "shooting": 75 }
     ]
   },
   {
@@ -265,18 +265,18 @@
     "positions": ["LM", "CM", "LF", "F"],
     "attributes": [
       { "tackling": 20 },
-      { "positioning": 40 },
+      { "positioning": 50 },
       { "interceptions": 35 },
       { "discipline": 35 },
-      { "physical": 50 },
-      { "heading": 45 },
+      { "physical": 55 },
+      { "heading": 50 },
       { "pace": 80 },
       { "acceleration": 80 },
       { "passing": 80 },
       { "creativity": 80 },
       { "control": 80 },
       { "dribbling": 80 },
-      { "shooting": 70 }
+      { "shooting": 80 }
     ]
   },
   {
@@ -285,7 +285,7 @@
     "positions": ["S"],
     "attributes": [
       { "tackling": 25 },
-      { "positioning": 60 },
+      { "positioning": 65 },
       { "interceptions": 35 },
       { "discipline": 70 },
       { "physical": 80 },
@@ -293,10 +293,10 @@
       { "pace": 80 },
       { "acceleration": 75 },
       { "passing": 65 },
-      { "creativity": 55 },
-      { "control": 80 },
-      { "dribbling": 80 },
-      { "shooting": 80 }
+      { "creativity": 65 },
+      { "control": 85 },
+      { "dribbling": 85 },
+      { "shooting": 85 }
     ]
   },
   {
@@ -308,14 +308,14 @@
       { "positioning": 65 },
       { "interceptions": 35 },
       { "discipline": 70 },
-      { "physical": 80 },
-      { "heading": 80 },
-      { "pace": 80 },
-      { "acceleration": 80 },
+      { "physical": 70 },
+      { "heading": 75 },
+      { "pace": 75 },
+      { "acceleration": 75 },
       { "passing": 65 },
       { "creativity": 65 },
-      { "control": 80 },
-      { "dribbling": 80 },
+      { "control": 75 },
+      { "dribbling": 75 },
       { "shooting": 70 }
     ]
   },
@@ -392,10 +392,10 @@
       { "heading": 65 },
       { "pace": 70 },
       { "acceleration": 75 },
-      { "passing": 65 },
+      { "passing": 70 },
       { "creativity": 65 },
       { "control": 70 },
-      { "dribbling": 65 },
+      { "dribbling": 70 },
       { "shooting": 85 }
     ]
   },

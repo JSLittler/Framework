@@ -1,9 +1,9 @@
 import { Application } from "express";
 
 import { findUser } from '../database/userFunctions.js';
-import { setupNewGame } from "../models/newGame/index.js";
+import { setupNewGame, createNewSeason } from "../models/newGame/index.js";
 import { simulateGames } from "../models/simulateGames/index.js";
-import { getSlmDashboardPage, getSlmViewTeamPage, getSlmViewPlayerPage, getSlmTransfersPage, getSlmPickTeamPage, getSlmPlayGamePage } from "../pageConfig/index.js";
+import { getSlmDashboardPage, getSlmViewTeamPage, getSlmViewPlayerPage, getSlmTransfersPage, getSlmPickTeamPage, getSlmPlayGamePage, getSlmEndSeasonPage } from "../pageConfig/index.js";
 import { findGameByUser, managePlayerGames } from "../database/gameFunctions.js";
 
 const gamesRoutes = (app: Application) => {
@@ -276,6 +276,36 @@ const gamesRoutes = (app: Application) => {
     await managePlayerGames(updatedGame, name, _id);
 
     const config = await getSlmPlayGamePage();
+    const userDetails = {
+      id: _id,
+      username: name,
+      loggedIn: true
+    };
+
+    const response = {
+      state: { 
+        userDetails,
+        game: updatedGame
+      },
+      config
+    };
+
+    return res.send(response);
+  });
+
+  app.get('/slm/game/end-season', async (req, res) => {
+    const { username, id } = req?.headers;
+    const { name, _id } = await findUser(username?.toString() || '');
+    
+    if(!id || !username || _id.toString() !== id?.toString()) {
+      return res.status(401).json({});
+    }
+
+    const savedGame = await findGameByUser(name, _id);
+    const updatedGame = await createNewSeason(savedGame);
+    await managePlayerGames(updatedGame, name, _id);
+
+    const config = await getSlmEndSeasonPage();
     const userDetails = {
       id: _id,
       username: name,

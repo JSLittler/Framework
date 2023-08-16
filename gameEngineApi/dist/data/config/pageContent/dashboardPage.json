@@ -1,29 +1,28 @@
 [
-    { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "Dashboard" }] },
-    {
-      "name": "main",
-      "props": [
-        { "key": "id", "value": "main" },
-        { "key": "value", "value": 
-          [
-            {
-              "name": "dashboard",
-              "props": [
-                { "key": "id", "value": "dashboard" },
-                {
-                  "key": "pageLinks",
-                  "value": {
-                    "transfers": "slm/game/transfers/new",
-                    "pickTeam": "slm/game/pick-team",
-                    "playGame": "slm/game/playGame",
-                    "viewTeam": "slm/game/team/"
-                  }
+  { "name": "header", "props": [{ "key": "id", "value": "header" }, { "key": "componentTitle", "value": "Dashboard" }] },
+  {
+    "name": "main",
+    "props": [
+      { "key": "id", "value": "main" },
+      { "key": "value", "value": 
+        [
+          {
+            "name": "dashboard",
+            "props": [
+              { "key": "id", "value": "dashboard" },
+              {
+                "key": "pageLinks",
+                "value": {
+                  "transfers": "slm/game/transfers/new",
+                  "pickTeam": "slm/game/pick-team",
+                  "playGame": "slm/game/playGame",
+                  "viewTeam": "slm/game/team/"
                 }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    { "name": "footer", "props": [{ "key": "id", "value": "footer" }, { "key": "componentTitle", "value": "Dashboard" }] }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ]
