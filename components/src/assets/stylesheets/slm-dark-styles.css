@@ -1,0 +1,227 @@
+.app-page {
+    display: inline;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  .header {
+    width: 100vw;
+    margin: 0 auto;
+    position: fixed;
+    align-items: center;
+    min-height: 2em;
+    text-align: center;
+    display: flex;
+    z-index: 900;
+    color: black;
+    background-color: white;
+    box-shadow: 5px 5px 5px #694545fc;
+  
+    .app-title {
+      margin-left: 8em;
+      margin-right: 2em;
+      text-align: center;
+    }
+  
+    .page-title {
+      margin-right: 2em;
+      border-left: 2px solid black;
+      padding: 2em;
+      height: 10px;
+    }
+  }
+  
+  .panel {
+    height: 100vh;
+    text-wrap: balance;
+    width: 720px;
+    padding-top: 125px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    color: white;
+    background-color: black;
+    overflow-y: scroll;
+    box-shadow: 5px 5px 5px #694545fc, -2px 5px 5px #694545fc;
+  }
+  
+  @media screen and (max-width: 720px) {
+    .header {
+      text-align: left;
+      margin: 0 auto;
+      position: fixed;
+      align-items: center;
+    }
+  
+    .app-title {
+      margin-left: 1em !important;
+      margin-right: 0em !important;
+      text-align: left !important;
+    }
+  
+    .panel {
+      width: 100vw !important;
+    }
+  
+    button {
+      min-width: 100px !important;
+      width: 100% !important;
+    }
+  
+    .button-ball {
+      width: 100px !important;  
+      height: 100px;  
+      border: none;  
+      border-radius: 50%;  
+      padding: 5px;
+      flex: space-around;
+      margin: 1%;
+      margin-top: 1em;
+      margin-bottom: 16px;
+      box-shadow: 4px 4px 6px 2px silver
+    }
+  
+    .button-two-lines {
+      min-width: 130px !important;
+    }
+  }
+  
+  /* page content  */
+  
+  .message {
+    color: black;
+  }
+    
+  .login-form {
+    font-size: 30px;
+    line-height: 35px;
+    width: 60%;
+    display: inline-block;
+  
+    label {
+      font-size: 20px;
+    }
+  }
+  
+  input {
+    color: black;
+    font-size: 20px;
+    width: 250px;  
+    height: 25px;  
+    border: none;  
+    border-radius: 3px;  
+    padding-left: 8px;
+  }
+  
+  button {
+    color: black;
+    width: 300px;  
+    height: 30px;  
+    border: none;  
+    border-radius: 17px;  
+    padding-left: 7px;
+    flex: space-around;
+    margin: 1%;
+    margin-top: 1em;
+    box-shadow: 4px 4px 6px 2px silver
+  }
+  
+  .button-ball-container {
+    display: inline-flex;
+  }
+  
+  .button-ball { 
+    color: black;
+    width: 100px;  
+    height: 100px;  
+    border: none;  
+    border-radius: 50%;  
+    padding: 5px;
+    flex: space-around;
+    margin: 1%;
+    margin-top: 1em;
+    margin-bottom: 16px;
+    box-shadow: 4px 4px 6px 2px silver
+  }
+  
+  .button-small {
+    color: red;
+    width: 130px;
+    margin-top: 1em;
+    margin-right: 1em;
+    box-shadow: 4px 4px 6px 2px silver
+  }
+  
+  .button-small-selected {
+    color: red;
+    width: 130px;
+    margin-top: 1em;
+    margin-right: 1em;
+    background-color: limegreen;
+    box-shadow: 1px 1px 6px 1px silver;
+  }
+  
+  .button-two-lines {
+    color: red;
+    font-size: 12px;
+    width: 130px;
+    height: 55px;
+    border-radius: 30px;
+    padding-bottom: 3px;
+    box-shadow: 4px 4px 6px 2px silver
+  }
+  
+  .button-two-lines-selected {
+    color: red;
+    font-size: 12px;
+    width: 130px;
+    height: 55px;
+    border-radius: 30px;
+    padding-bottom: 3px;
+    box-shadow: 1px 1px 6px 1px silver;
+    background-color: limegreen;
+  }
+  
+  .table {
+    padding-left: 2em;
+    padding-right: 2em;
+    align-items: left;
+    margin-left: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  
+  .player-table {
+    text-align: left;
+    padding-left: 2em;
+    padding-right: 2em;
+    align-items: left;
+    margin-left: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  
+  .player-table th {
+    text-align: center;
+  }
+  
+  .table-centered {
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .green-text {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .div-padding-top {
+    padding-top: 2em;
+  }
+  
+  .div-padding-bottom {
+    padding-bottom: 2em;
+  }
