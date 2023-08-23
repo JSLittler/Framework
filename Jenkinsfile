@@ -15,8 +15,7 @@ pipeline {
                  script{
                         dir("framework")
                         {
-                            git url "https://github.com/JSLittler/Framework.git"
-                                branch "main"
+                            git "https://github.com/JSLittler/Framework.git"
                         }
                     }
                 }
