@@ -15,7 +15,11 @@ pipeline {
                  script{
                         dir("terraform")
                         {
-                            git "https://github.com/JSLittler/Framework.git"
+                            git(
+                                url: "https://github.com/JSLittler/Framework.git",
+                                credentialsId: credentials('GITHUB_PAT'),
+                                branch: "${branch}"
+                            )
                         }
                     }
                 }
