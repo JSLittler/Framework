@@ -6,7 +6,6 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-        GITHUB_PAT = credentials('GITHUB_PAT')
     }
 
    agent  any
@@ -16,11 +15,7 @@ pipeline {
                  script{
                         dir("terraform")
                         {
-                            git(
-                                url: "git@github.com:JSLittler/Framework.git",
-                                credentialsId: "${GITHUB_PAT}",
-                                branch: "main"
-                            )
+                            git "git@github.com:JSLittler/Framework.git"
                         }
                     }
                 }
